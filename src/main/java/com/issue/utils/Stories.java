@@ -9,12 +9,12 @@ import java.util.Optional;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.issue.configuration.GlobalParams;
-import com.issue.contract.Feature;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
 import com.issue.contract.Story;
 import com.issue.dao.StoryDao;
 import com.issue.enums.Status;
+import com.issue.model.Feature;
 import com.issue.model.StoryImpl;
 import com.issue.tracking.IssueStrategy;
 

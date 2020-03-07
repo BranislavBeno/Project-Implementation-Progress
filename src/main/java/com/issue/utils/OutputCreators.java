@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.Dao2Output;
-import com.issue.contract.Feature;
 import com.issue.contract.IFeatureDao;
+import com.issue.model.Feature;
 import com.issue.output.FeatureDao2Csv;
 import com.issue.output.FeatureDao2Html;
 import com.issue.output.FeatureDao2Xlsx;

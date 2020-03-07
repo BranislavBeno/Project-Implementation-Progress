@@ -9,8 +9,8 @@ import java.util.List;
 
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.Dao2Output;
-import com.issue.contract.Feature;
 import com.issue.contract.IFeatureDao;
+import com.issue.model.Feature;
 import com.issue.utils.Features;
 
 /**

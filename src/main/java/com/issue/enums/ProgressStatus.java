@@ -4,7 +4,7 @@
 package com.issue.enums;
 
 import com.issue.contract.Countable;
-import com.issue.contract.Feature;
+import com.issue.model.Feature;
 
 /**
  * The Enum ProgressStatus.

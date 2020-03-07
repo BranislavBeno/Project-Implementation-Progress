@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.issue.contract.Feature;
 import com.issue.contract.IFeatureDao;
 import com.issue.enums.Status;
+import com.issue.model.Feature;
 import com.issue.utils.Features;
 
 /**

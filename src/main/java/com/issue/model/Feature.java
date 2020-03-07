@@ -2,7 +2,6 @@ package com.issue.model;
 
 import java.util.Optional;
 
-import com.issue.contract.Feature;
 import com.issue.enums.Status;
 
 /**
@@ -10,7 +9,7 @@ import com.issue.enums.Status;
  *
  * @author branislav.beno
  */
-public class FeatureImpl implements Feature {
+public class Feature {
 
 	/** The key. */
 	private String key;
@@ -50,7 +49,7 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param builder the builder
 	 */
-	public FeatureImpl(Builder builder) {
+	public Feature(Builder builder) {
 		this.key = Optional.ofNullable(builder.key).orElseThrow();
 		this.team = Optional.ofNullable(builder.team).orElseThrow();
 		this.featureSummary = Optional.ofNullable(builder.feature).orElseThrow();
@@ -67,7 +66,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the team
 	 */
-	@Override
 	public String getTeam() {
 		return team;
 	}
@@ -77,7 +75,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param team the team to set
 	 */
-	@Override
 	public void setTeam(String team) {
 		this.team = team;
 	}
@@ -87,7 +84,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the featureSummary
 	 */
-	@Override
 	public String getFeatureSummary() {
 		return featureSummary;
 	}
@@ -97,7 +93,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param featureSummary the featureSummary to set
 	 */
-	@Override
 	public void setFeatureSummary(String featureSummary) {
 		this.featureSummary = featureSummary;
 	}
@@ -107,7 +102,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the estimated
 	 */
-	@Override
 	public Integer getEstimated() {
 		return estimated;
 	}
@@ -117,7 +111,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param estimated the estimated to set
 	 */
-	@Override
 	public void setEstimated(Integer estimated) {
 		this.estimated = estimated;
 
@@ -130,7 +123,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param increment the increment
 	 */
-	@Override
 	public void incEstimated(int increment) {
 		// increment estimated story points counter
 		if (this.estimated == null)
@@ -149,7 +141,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the opened
 	 */
-	@Override
 	public Integer getOpened() {
 		return opened;
 	}
@@ -159,7 +150,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param opened the opened to set
 	 */
-	@Override
 	public void setOpened(Integer opened) {
 		this.opened = opened;
 	}
@@ -169,7 +159,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param increment the increment
 	 */
-	@Override
 	public void incOpened(int increment) {
 		// increment opened story points counter
 		if (this.opened == null)
@@ -182,7 +171,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the inProgress
 	 */
-	@Override
 	public Integer getInProgress() {
 		return inProgress;
 	}
@@ -192,7 +180,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param inProgress the inProgress to set
 	 */
-	@Override
 	public void setInProgress(Integer inProgress) {
 		this.inProgress = inProgress;
 	}
@@ -202,7 +189,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param increment the increment
 	 */
-	@Override
 	public void incInProgress(int increment) {
 		// increment in progress story points counter
 		if (this.inProgress == null)
@@ -215,7 +201,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the closed
 	 */
-	@Override
 	public Integer getClosed() {
 		return closed;
 	}
@@ -225,7 +210,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param closed the closed to set
 	 */
-	@Override
 	public void setClosed(Integer closed) {
 		this.closed = closed;
 
@@ -238,7 +222,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param increment the increment
 	 */
-	@Override
 	public void incClosed(int increment) {
 		// increment closed story points counter
 		if (this.closed == null)
@@ -254,7 +237,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the done
 	 */
-	@Override
 	public Double getDone() {
 		return done;
 	}
@@ -264,7 +246,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the raw done
 	 */
-	@Override
 	public Double getRawDone() {
 		return rawDone;
 	}
@@ -274,7 +255,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the key
 	 */
-	@Override
 	public String getKey() {
 		return key;
 	}
@@ -284,7 +264,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return the status
 	 */
-	@Override
 	public Status getStatus() {
 		return status;
 	}
@@ -294,7 +273,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @param status the new status
 	 */
-	@Override
 	public void setStatus(Status status) {
 		this.status = status;
 	}
@@ -304,7 +282,6 @@ public class FeatureImpl implements Feature {
 	 *
 	 * @return true, if is stories defined
 	 */
-	@Override
 	public boolean isStoriesDefined() {
 		return storiesDefined;
 	}
@@ -444,8 +421,8 @@ public class FeatureImpl implements Feature {
 		 *
 		 * @return the feature
 		 */
-		public FeatureImpl build() {
-			return new FeatureImpl(this);
+		public Feature build() {
+			return new Feature(this);
 		}
 	}
 }

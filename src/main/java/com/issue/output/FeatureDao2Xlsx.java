@@ -11,7 +11,6 @@ import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -29,8 +28,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.Dao2Output;
-import com.issue.contract.Feature;
 import com.issue.contract.IFeatureDao;
+import com.issue.model.Feature;
 import com.issue.utils.Features;
 
 /**

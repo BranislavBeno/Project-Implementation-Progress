@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.Dao2Output;
-import com.issue.contract.Feature;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
 import com.issue.contract.Story;
+import com.issue.model.Feature;
 import com.issue.utils.Features;
 import com.issue.utils.OutputCreators;
 import com.issue.utils.Stories;

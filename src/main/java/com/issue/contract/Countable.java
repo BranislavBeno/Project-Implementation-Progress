@@ -3,6 +3,8 @@
  */
 package com.issue.contract;
 
+import com.issue.model.Feature;
+
 /**
  * The Interface Countable.
  *

@@ -12,11 +12,10 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.issue.configuration.GlobalParams;
-import com.issue.contract.Feature;
 import com.issue.contract.IFeatureDao;
 import com.issue.dao.FeatureDao;
 import com.issue.enums.Status;
-import com.issue.model.FeatureImpl;
+import com.issue.model.Feature;
 import com.issue.tracking.IssueStrategy;
 
 /**
@@ -130,7 +129,7 @@ public class Features {
 			String status = statusField.get("name").asText().replace(' ', '_');
 
 			// Add new feature into map
-			features.save(new FeatureImpl.Builder().feature(summary).key(key).team(team)
+			features.save(new Feature.Builder().feature(summary).key(key).team(team)
 					.status(Status.valueOf(status.toUpperCase())).build());
 		}));
 

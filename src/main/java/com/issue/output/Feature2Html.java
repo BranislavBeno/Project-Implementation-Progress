@@ -5,7 +5,7 @@ package com.issue.output;
 
 import java.util.Optional;
 
-import com.issue.contract.Feature;
+import com.issue.model.Feature;
 import com.issue.utils.Features;
 import com.issue.utils.Utils;
 

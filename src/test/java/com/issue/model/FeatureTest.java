@@ -22,7 +22,7 @@ class FeatureTest {
 	 */
 	@Test
 	void testCompleteEmptyFeatureOutput() {
-		assertThrows(NoSuchElementException.class, () -> new FeatureImpl.Builder().build());
+		assertThrows(NoSuchElementException.class, () -> new Feature.Builder().build());
 	}
 
 	/**
@@ -37,7 +37,7 @@ class FeatureTest {
 				+ "      <td style=\"text-align: center;\">n/a</td>\n"
 				+ "      <td style=\"text-align: center;\">n/a</td>\n" + "     </tr>\n";
 
-		FeatureImpl feature = new FeatureImpl.Builder().feature("Feature <1").team("TeamOne").key("ISSUE-1")
+		Feature feature = new Feature.Builder().feature("Feature <1").team("TeamOne").key("ISSUE-1")
 				.status(Status.OPEN).build();
 
 		assertThat(new Feature2Html(feature).toString()).isEqualTo(expected);
@@ -55,7 +55,7 @@ class FeatureTest {
 				+ "      <td style=\"text-align: center;\">n/a</td>\n"
 				+ "      <td style=\"text-align: center;\">0%</td>\n" + "     </tr>\n";
 
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamTwo").feature("Feature >1").key("ISSUE-1")
+		Feature feature = new Feature.Builder().team("TeamTwo").feature("Feature >1").key("ISSUE-1")
 				.status(Status.OPEN).estimated(0).opened(0).build();
 
 		assertThat(new Feature2Html(feature).toString()).isEqualTo(expected);
@@ -73,7 +73,7 @@ class FeatureTest {
 				+ "      <td style=\"text-align: center;\">0</td>\n"
 				+ "      <td style=\"text-align: center;\">0%</td>\n" + "     </tr>\n";
 
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamThree").feature("Feature '1").key("ISSUE-1")
+		Feature feature = new Feature.Builder().team("TeamThree").feature("Feature '1").key("ISSUE-1")
 				.status(Status.OPEN).estimated(0).opened(0).closed(0).build();
 
 		assertThat(new Feature2Html(feature).toString()).isEqualTo(expected);
@@ -91,7 +91,7 @@ class FeatureTest {
 				+ "      <td style=\"text-align: center;\">n/a</td>\n"
 				+ "      <td style=\"text-align: center;\">0%</td>\n" + "     </tr>\n";
 
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamFour").feature("Feature \"1").key("ISSUE-1")
+		Feature feature = new Feature.Builder().team("TeamFour").feature("Feature \"1").key("ISSUE-1")
 				.status(Status.OPEN).estimated(1).opened(0).inProgress(0).build();
 
 		assertThat(new Feature2Html(feature).toString()).isEqualTo(expected);
@@ -109,7 +109,7 @@ class FeatureTest {
 				+ "      <td style=\"text-align: center;\">43</td>\n"
 				+ "      <td style=\"text-align: center;\">82%</td>\n" + "     </tr>\n";
 
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamFive").feature("Feature &2").key("ISSUE-1")
+		Feature feature = new Feature.Builder().team("TeamFive").feature("Feature &2").key("ISSUE-1")
 				.status(Status.OPEN).estimated(52).opened(6).inProgress(3).closed(43).build();
 
 		assertThat(new Feature2Html(feature).toString()).isEqualTo(expected);

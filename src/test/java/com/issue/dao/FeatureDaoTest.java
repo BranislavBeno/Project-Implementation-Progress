@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.issue.enums.Status;
-import com.issue.model.FeatureImpl;
+import com.issue.model.Feature;
 
 /**
  * The Class FeatureDaoTest.
@@ -27,11 +27,11 @@ class FeatureDaoTest {
 	public void setUpUserDaoInstance() {
 		featureDao = new FeatureDao();
 
-		featureDao.save(new FeatureImpl.Builder().team("TeamOne").feature("Feature 1").key("ISSUE-1")
+		featureDao.save(new Feature.Builder().team("TeamOne").feature("Feature 1").key("ISSUE-1")
 				.status(Status.OPEN).estimated(0).opened(0).build());
-		featureDao.save(new FeatureImpl.Builder().team("TeamTwo").feature("Feature 2").key("ISSUE-2")
+		featureDao.save(new Feature.Builder().team("TeamTwo").feature("Feature 2").key("ISSUE-2")
 				.status(Status.ACTIVE).estimated(52).opened(6).inProgress(3).closed(43).build());
-		featureDao.save(new FeatureImpl.Builder().team("TeamThree").feature("Feature 3").key("ISSUE-3")
+		featureDao.save(new Feature.Builder().team("TeamThree").feature("Feature 3").key("ISSUE-3")
 				.status(Status.INACTIVE).estimated(6).inProgress(3).closed(3).build());
 	}
 
@@ -48,7 +48,7 @@ class FeatureDaoTest {
 	 */
 	@Test
 	public void testFeatureDaoUpdate() {
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamThree").feature("Feature 4").key("ISSUE-1")
+		Feature feature = new Feature.Builder().team("TeamThree").feature("Feature 4").key("ISSUE-1")
 				.status(Status.OPEN).build();
 		featureDao.update(feature, new String[] { "TeamFour", "Feature 44", "Inactive" });
 
@@ -62,7 +62,7 @@ class FeatureDaoTest {
 	 */
 	@Test
 	public void testFeatureDaoFullUpdate() {
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamThree").feature("Feature 4").key("ISSUE-1")
+		Feature feature = new Feature.Builder().team("TeamThree").feature("Feature 4").key("ISSUE-1")
 				.status(Status.INACTIVE).build();
 		featureDao.update(feature, new String[] { "TeamFive", "Feature 444", "Activ", "0", "0", "0", "0" });
 
@@ -76,7 +76,7 @@ class FeatureDaoTest {
 	 */
 	@Test
 	public void testFeatureDaoSave() {
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamThree").feature("Feature 4").key("ISSUE-4")
+		Feature feature = new Feature.Builder().team("TeamThree").feature("Feature 4").key("ISSUE-4")
 				.status(Status.ACTIVE).build();
 		featureDao.save(feature);
 
@@ -91,7 +91,7 @@ class FeatureDaoTest {
 	 */
 	@Test
 	public void testFeatureDaoDelete() {
-		featureDao.delete(featureDao.get("ISSUE-1").orElseGet(() -> new FeatureImpl.Builder().build()));
+		featureDao.delete(featureDao.get("ISSUE-1").orElseGet(() -> new Feature.Builder().build()));
 
 		assertThat(featureDao.getAll().size()).isEqualTo(2);
 	}
@@ -101,7 +101,7 @@ class FeatureDaoTest {
 	 */
 	@Test
 	public void testFeatureDaoDeleteNotContaining() {
-		FeatureImpl feature = new FeatureImpl.Builder().team("TeamTwo").feature("Feature 1").key("ISSUE-1")
+		Feature feature = new Feature.Builder().team("TeamTwo").feature("Feature 1").key("ISSUE-1")
 				.status(Status.OPEN).estimated(0).opened(0).build();
 		featureDao.delete(feature);
 		assertThat(featureDao.getAll().size()).isEqualTo(3);
