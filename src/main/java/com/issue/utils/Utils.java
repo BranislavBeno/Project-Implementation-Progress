@@ -24,8 +24,8 @@ import org.apache.logging.log4j.Logger;
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
-import com.issue.contract.Story;
 import com.issue.model.Feature;
+import com.issue.model.Story;
 
 /**
  * The Class Utils.

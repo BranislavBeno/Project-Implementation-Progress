@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.issue.contract.IStoryDao;
-import com.issue.contract.Story;
+import com.issue.model.Story;
 
 /**
  * The Class StoryDao.

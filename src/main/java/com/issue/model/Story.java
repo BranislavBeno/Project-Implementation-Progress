@@ -2,13 +2,12 @@ package com.issue.model;
 
 import java.util.Optional;
 
-import com.issue.contract.Story;
 import com.issue.enums.Status;
 
 /**
  * The Class Story.
  */
-public class StoryImpl implements Story{
+public class Story{
 
 	/** The epic. */
 	private String epic;
@@ -24,7 +23,7 @@ public class StoryImpl implements Story{
 	 *
 	 * @param builder the builder
 	 */
-	public StoryImpl(Builder builder) {
+	public Story(Builder builder) {
 		this.epic = Optional.ofNullable(builder.epic).orElseThrow();
 		this.status = Optional.ofNullable(builder.status).orElseThrow();
 		this.storyPoints = builder.storyPoints;
@@ -35,7 +34,6 @@ public class StoryImpl implements Story{
 	 *
 	 * @return the epic
 	 */
-	@Override
 	public Optional<String> getEpic() {
 		return Optional.ofNullable(epic);
 	}
@@ -45,7 +43,6 @@ public class StoryImpl implements Story{
 	 *
 	 * @return the status
 	 */
-	@Override
 	public Optional<Status> getStatus() {
 		return Optional.ofNullable(status);
 	}
@@ -55,7 +52,6 @@ public class StoryImpl implements Story{
 	 *
 	 * @return the story points
 	 */
-	@Override
 	public Optional<Integer> getStoryPoints() {
 		return Optional.ofNullable(storyPoints);
 	}
@@ -112,8 +108,8 @@ public class StoryImpl implements Story{
 		 *
 		 * @return the story
 		 */
-		public StoryImpl build() {
-			return new StoryImpl(this);
+		public Story build() {
+			return new Story(this);
 		}
 	}
 }

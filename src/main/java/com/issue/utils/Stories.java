@@ -11,11 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
-import com.issue.contract.Story;
 import com.issue.dao.StoryDao;
 import com.issue.enums.Status;
 import com.issue.model.Feature;
-import com.issue.model.StoryImpl;
+import com.issue.model.Story;
 import com.issue.tracking.IssueStrategy;
 
 /**
@@ -73,7 +72,7 @@ public class Stories {
 			String status = statusField.get("name").asText().replace(' ', '_');
 
 			// Add new story into list
-			stories.save(new StoryImpl.Builder().epic(epic).status(Status.valueOf(status.toUpperCase())).storyPoints(sp)
+			stories.save(new Story.Builder().epic(epic).status(Status.valueOf(status.toUpperCase())).storyPoints(sp)
 					.build());
 		}));
 

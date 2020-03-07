@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
-import com.issue.contract.Story;
 import com.issue.model.Feature;
+import com.issue.model.Story;
 import com.issue.output.FeatureDao2Csv;
 import com.issue.output.FeatureDao2Html;
 
