@@ -6,8 +6,11 @@ package com.issue.utils;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
@@ -38,6 +41,49 @@ public class Stories {
 	}
 
 	/**
+	 * Extract story points.
+	 *
+	 * @param issueField the issue field
+	 * @return the int
+	 */
+	private static int extractStoryPoints(JsonNode issueField) {
+		// Get json node story points
+		JsonNode storyPoints = issueField.get(STORY_POINTS_FIELD_ID);
+
+		return storyPoints.asInt(0);
+	}
+
+	/**
+	 * Extract epic link.
+	 *
+	 * @param issueFields the issue fields
+	 * @return the string
+	 */
+	private static String extractEpicLink(JsonNode issueFields) {
+		// Get json node epic link
+		JsonNode epicLink = issueFields.get(EPIC_LINK_FIELD_ID);
+
+		return epicLink.textValue();
+	}
+
+	/**
+	 * Extract issue status.
+	 *
+	 * @param issueFields the issue fields
+	 * @return the string
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
+	 */
+	private static String extractIssueStatus(JsonNode issueFields) {
+		// Get json node "fields.status"
+		JsonNode statusField = Optional.ofNullable(issueFields.get("status")).orElse(new ObjectNode(null));
+
+		// Return status name
+		return Optional.ofNullable(statusField.get("name").asText()).orElse("").replace(' ', '_');
+	}
+
+	/**
 	 * Extract stories.
 	 *
 	 * @param jsonString the json string
@@ -56,20 +102,14 @@ public class Stories {
 			// Get json node "fields"
 			JsonNode issueFields = issue.get("fields");
 
-			// Get json node story points
-			JsonNode storyPoints = issueFields.get(STORY_POINTS_FIELD_ID);
 			// Get story points
-			int sp = storyPoints.asInt(0);
+			int sp = extractStoryPoints(issueFields);
 
-			// Get json node epic link
-			JsonNode epicLink = issueFields.get(EPIC_LINK_FIELD_ID);
 			// Get epic link
-			String epic = epicLink.textValue();
+			String epic = extractEpicLink(issueFields);
 
-			// Get json node "fields.status"
-			JsonNode statusField = issueFields.get("status");
 			// Get issue status
-			String status = statusField.get("name").asText().replace(' ', '_');
+			String status = extractIssueStatus(issueFields);
 
 			// Add new story into list
 			stories.save(new Story.Builder().epic(epic).status(Status.valueOf(status.toUpperCase())).storyPoints(sp)
