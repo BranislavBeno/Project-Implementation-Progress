@@ -6,20 +6,7 @@
    "key": "ISSUE-13466",
    "fields": {
     "customfield_12640": "ISSUE-10796",
-    "customfield_10002": 1,
-    "status": {
-     "statusCategory": {
-      "key": "new",
-      "colorName": "blue-gray",
-      "id": 2,
-      "self": "http://jira/rest/api/2/statuscategory/2",
-      "name": "To Do"
-     },
-     "id": "11770",
-     "iconUrl": "http://jira/images/icons/statuses/generic.png",
-     "self": "http://jira/rest/api/2/status/11770",
-     "name": "Ready for Refinement"
-    }
+    "customfield_10002": 1
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
    "id": "1553313",
@@ -51,19 +38,7 @@
    "fields": {
     "customfield_12640": "ISSUE-10679",
     "customfield_10002": null,
-    "status": {
-     "statusCategory": {
-      "key": "new",
-      "colorName": "blue-gray",
-      "id": 2,
-      "self": "http://jira/rest/api/2/statuscategory/2",
-      "name": "To Do"
-     },
-     "id": "11770",
-     "iconUrl": "http://jira/images/icons/statuses/generic.png",
-     "self": "http://jira/rest/api/2/status/11770",
-     "name": "Ready for Refinement"
-    }
+    "status": {}
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
    "id": "1553236",

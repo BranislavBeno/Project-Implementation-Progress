@@ -60,10 +60,15 @@ public class Stories {
 	 * @return the string
 	 */
 	private static String extractEpicLink(JsonNode issueFields) {
-		// Get json node epic link
-		JsonNode epicLink = issueFields.get(EPIC_LINK_FIELD_ID);
+		// Initialize epic link text
+		String link = "";
 
-		return epicLink.textValue();
+		// Get json node epic link
+		if (issueFields.get(EPIC_LINK_FIELD_ID) != null) {
+			link = issueFields.get(EPIC_LINK_FIELD_ID).asText();
+		}
+
+		return link;
 	}
 
 	/**
@@ -76,11 +81,18 @@ public class Stories {
 	 * @throws JsonParseException
 	 */
 	private static String extractIssueStatus(JsonNode issueFields) {
-		// Get json node "fields.status"
-		JsonNode statusField = Optional.ofNullable(issueFields.get("status")).orElse(new ObjectNode(null));
+		// Initialize status
+		String status = Status.READY_FOR_REFINEMENT.name();
 
-		// Return status name
-		return Optional.ofNullable(statusField.get("name").asText()).orElse("").replace(' ', '_');
+		// Get json node "fields.status"
+		JsonNode statusField = Optional.ofNullable(issueFields.get("status")).orElseGet(() -> new ObjectNode(null));
+
+		// Get status name
+		if (statusField.get("name") != null) {
+			status = statusField.get("name").asText().replace(' ', '_');
+		}
+
+		return status;
 	}
 
 	/**
