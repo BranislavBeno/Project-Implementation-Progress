@@ -48,7 +48,8 @@ public class Stories {
 	 */
 	private static int extractStoryPoints(JsonNode issueField) {
 		// Get json node story points
-		JsonNode storyPoints = issueField.get(STORY_POINTS_FIELD_ID);
+		JsonNode storyPoints = Optional.ofNullable(issueField.get(STORY_POINTS_FIELD_ID))
+				.orElseGet(() -> new ObjectNode(null));
 
 		return storyPoints.asInt(0);
 	}
@@ -85,7 +86,7 @@ public class Stories {
 		String status = Status.READY_FOR_REFINEMENT.name();
 
 		// Get json node "fields.status"
-		JsonNode statusField = Optional.ofNullable(issueFields.get("status")).orElseGet(() -> new ObjectNode(null));
+		JsonNode statusField = Optional.ofNullable(issueFields.get("status")).orElse(new ObjectNode(null));
 
 		// Get status name
 		if (statusField.get("name") != null) {
@@ -150,7 +151,8 @@ public class Stories {
 	private static void updateFeature(IFeatureDao<String, Feature> features, final Story story) {
 		String epic = story.getEpic().orElse("");
 		// Get particular feature object
-		Feature feature = features.get(epic).orElseThrow(IllegalArgumentException::new);
+		Feature feature = features.get(epic)
+				.orElse(new Feature.Builder().key("").team("").feature("").status(Status.CREATED).build());
 		// Increment estimated story points counter
 		feature.incEstimated(story.getStoryPoints().orElse(0));
 		// Increment working progress counters

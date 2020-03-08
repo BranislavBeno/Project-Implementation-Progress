@@ -14,7 +14,6 @@
   },{
    "key": "ISSUE-13457",
    "fields": {
-    "customfield_12640": "ISSUE-10679",
     "customfield_10002": null,
     "status": {
      "statusCategory": {
@@ -69,7 +68,6 @@
    "key": "ISSUE-13447",
    "fields": {
     "customfield_12640": "ISSUE-10679",
-    "customfield_10002": 1,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
