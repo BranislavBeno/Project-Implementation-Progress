@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.IFeatureDao;
 import com.issue.dao.FeatureDao;
@@ -94,6 +95,65 @@ public class Features {
 	}
 
 	/**
+	 * @param issue
+	 * @return
+	 */
+	private static String parseKey(JsonNode issue) {
+		// Get json node "summary"
+		JsonNode keyField = Optional.ofNullable(issue.get("key")).orElseThrow();
+
+		return keyField.asText();
+	}
+
+	/**
+	 * @param issueFields
+	 * @return
+	 */
+	private static String parseSummary(JsonNode issueFields) {
+		// Get json node "summary"
+		JsonNode summaryField = Optional.ofNullable(issueFields.get(FEATURE_NAME_FIELD_ID))
+				.orElse(new ObjectNode(null));
+
+		return summaryField.asText();
+	}
+
+	/**
+	 * @param issueFields
+	 * @return
+	 */
+	private static String parseTeam(JsonNode issueFields) {
+		// Initialize team
+		String team = "";
+
+		// Get json node "ScrumTeam"
+		JsonNode scrumTeam = Optional.ofNullable(issueFields.get(SCRUM_TEAM_FIELD_ID)).orElse(new ObjectNode(null));
+
+		if (scrumTeam.get("value") != null) {
+			team = scrumTeam.get("value").asText();
+		}
+
+		return team;
+	}
+
+	/**
+	 * @param issueFields
+	 * @return
+	 */
+	private static String parseStatus(JsonNode issueFields) {
+		// Initialize status
+		String status = Status.CREATED.name();
+
+		// Get json node "status"
+		JsonNode statusField = Optional.ofNullable(issueFields.get("status")).orElse(new ObjectNode(null));
+
+		if (statusField.get("name") != null) {
+			status = statusField.get("name").asText().replace(' ', '_');
+		}
+
+		return status;
+	}
+
+	/**
 	 * Extract features.
 	 *
 	 * @param jsonString the json string
@@ -109,28 +169,26 @@ public class Features {
 
 		// run through issues
 		Optional.ofNullable(issuesNode).ifPresent(i -> i.forEach(issue -> {
-			// Get key
-			String key = issue.get("key").textValue();
-
 			// Get json node "fields"
 			JsonNode issueFields = issue.get("fields");
 
-			// Get issue summary
-			String summary = issueFields.get(FEATURE_NAME_FIELD_ID).asText();
+			if (issueFields != null) {
+				// Get key
+				String key = parseKey(issue);
 
-			// Get json node scrum team
-			JsonNode scrumTeam = issueFields.get(SCRUM_TEAM_FIELD_ID);
-			// Get SCRUM team
-			String team = scrumTeam.get("value").asText();
+				// Get issue summary
+				String summary = parseSummary(issueFields);
 
-			// Get json node "fields.status"
-			JsonNode statusField = issueFields.get("status");
-			// Get issue status
-			String status = statusField.get("name").asText().replace(' ', '_');
+				// Get SCRUM team
+				String team = parseTeam(issueFields);
 
-			// Add new feature into map
-			features.save(new Feature.Builder().feature(summary).key(key).team(team)
-					.status(Status.valueOf(status.toUpperCase())).build());
+				// Get issue status
+				String status = parseStatus(issueFields);
+
+				// Add new feature into map
+				features.save(new Feature.Builder().feature(summary).key(key).team(team)
+						.status(Status.valueOf(status.toUpperCase())).build());
+			}
 		}));
 
 		return features;

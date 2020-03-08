@@ -2922,20 +2922,7 @@
      "id": "19236",
      "self": "http://jira/rest/api/2/customFieldOption/19236"
     },
-    "customfield_12641": "[Basic] Feature068",
-    "status": {
-     "statusCategory": {
-      "key": "indeterminate",
-      "colorName": "yellow",
-      "id": 4,
-      "self": "http://jira/rest/api/2/statuscategory/4",
-      "name": "In Progress"
-     },
-     "id": "10060",
-     "iconUrl": "http://jira/images/icons/statuses/generic.png",
-     "self": "http://jira/rest/api/2/status/10060",
-     "name": "Active"
-    }
+    "customfield_12641": "[Basic] Feature068"
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
    "id": "811391",
@@ -2959,8 +2946,7 @@
      },
      "id": "10059",
      "iconUrl": "http://jira/images/icons/statuses/invisible.png",
-     "self": "http://jira/rest/api/2/status/10059",
-     "name": "Inactive"
+     "self": "http://jira/rest/api/2/status/10059"
     }
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
@@ -2969,11 +2955,6 @@
   },{
    "key": "ISSUE-8908",
    "fields": {
-    "customfield_17555": {
-     "value": "TeamFive",
-     "id": "19235",
-     "self": "http://jira/rest/api/2/customFieldOption/19235"
-    },
     "customfield_12641": "[Basic] Feature090",
     "status": {
      "statusCategory": {
@@ -2996,7 +2977,6 @@
    "key": "ISSUE-8906",
    "fields": {
     "customfield_17555": {
-     "value": "TeamTwo",
      "id": "19237",
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
@@ -3026,7 +3006,6 @@
      "id": "19236",
      "self": "http://jira/rest/api/2/customFieldOption/19236"
     },
-    "customfield_12641": "[Basic] Feature086",
     "status": {
      "statusCategory": {
       "key": "indeterminate",

@@ -54,7 +54,7 @@ class OutputCreatorTest {
 		// Get Json string
 		String jsonString = Utils.readFileContent("src/test/resources/stories.json");
 		// extract stories from json
-		IStoryDao<Story> stories = Stories.extractStories(jsonString);
+		IStoryDao<Story> stories = Stories.parseStories(jsonString);
 		return stories;
 	}
 

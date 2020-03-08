@@ -6,8 +6,6 @@ package com.issue.utils;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -41,12 +39,12 @@ public class Stories {
 	}
 
 	/**
-	 * Extract story points.
+	 * Parse story points.
 	 *
 	 * @param issueField the issue field
 	 * @return the int
 	 */
-	private static int extractStoryPoints(JsonNode issueField) {
+	private static int parseStoryPoints(JsonNode issueField) {
 		// Get json node story points
 		JsonNode storyPoints = Optional.ofNullable(issueField.get(STORY_POINTS_FIELD_ID))
 				.orElseGet(() -> new ObjectNode(null));
@@ -55,12 +53,12 @@ public class Stories {
 	}
 
 	/**
-	 * Extract epic link.
+	 * Parse epic link.
 	 *
 	 * @param issueFields the issue fields
 	 * @return the string
 	 */
-	private static String extractEpicLink(JsonNode issueFields) {
+	private static String parseEpicLink(JsonNode issueFields) {
 		// Initialize epic link text
 		String link = "";
 
@@ -73,15 +71,12 @@ public class Stories {
 	}
 
 	/**
-	 * Extract issue status.
+	 * Parse issue status.
 	 *
 	 * @param issueFields the issue fields
 	 * @return the string
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonParseException
 	 */
-	private static String extractIssueStatus(JsonNode issueFields) {
+	private static String parseIssueStatus(JsonNode issueFields) {
 		// Initialize status
 		String status = Status.READY_FOR_REFINEMENT.name();
 
@@ -97,13 +92,13 @@ public class Stories {
 	}
 
 	/**
-	 * Extract stories.
+	 * Parse stories.
 	 *
 	 * @param jsonString the json string
 	 * @return the i story dao
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static IStoryDao<Story> extractStories(final String jsonString) throws IOException {
+	public static IStoryDao<Story> parseStories(final String jsonString) throws IOException {
 		// Create empty stories list
 		IStoryDao<Story> stories = new StoryDao();
 
@@ -115,18 +110,20 @@ public class Stories {
 			// Get json node "fields"
 			JsonNode issueFields = issue.get("fields");
 
-			// Get story points
-			int sp = extractStoryPoints(issueFields);
+			if (issueFields != null) {
+				// Get story points
+				int sp = parseStoryPoints(issueFields);
 
-			// Get epic link
-			String epic = extractEpicLink(issueFields);
+				// Get epic link
+				String epic = parseEpicLink(issueFields);
 
-			// Get issue status
-			String status = extractIssueStatus(issueFields);
+				// Get issue status
+				String status = parseIssueStatus(issueFields);
 
-			// Add new story into list
-			stories.save(new Story.Builder().epic(epic).status(Status.valueOf(status.toUpperCase())).storyPoints(sp)
-					.build());
+				// Add new story into list
+				stories.save(new Story.Builder().epic(epic).status(Status.valueOf(status.toUpperCase())).storyPoints(sp)
+						.build());
+			}
 		}));
 
 		return stories;
@@ -200,7 +197,7 @@ public class Stories {
 			String jsonStories = IssueStrategy.STORIES.askIssueTracker(globalParams, startAt, maxResults);
 
 			// Extract stories from json
-			stories.saveAll(Stories.extractStories(jsonStories).getAll());
+			stories.saveAll(Stories.parseStories(jsonStories).getAll());
 
 			// Get json node "total"
 			JsonNode total = new ObjectMapper().readTree(jsonStories).get("total");
