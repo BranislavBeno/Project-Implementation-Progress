@@ -44,6 +44,9 @@ public class Feature {
 	/** The stories defined. */
 	private boolean storiesDefined = false;
 
+	/** The story points. */
+	private Integer storyPoints;
+
 	/**
 	 * Instantiates a new feature.
 	 *
@@ -58,6 +61,7 @@ public class Feature {
 		this.opened = builder.opened;
 		this.inProgress = builder.inProgress;
 		this.closed = builder.closed;
+		this.storyPoints = builder.storyPoints;
 		computeDone();
 	}
 
@@ -287,6 +291,15 @@ public class Feature {
 	}
 
 	/**
+	 * Gets the story points.
+	 *
+	 * @return the storyPoints
+	 */
+	public Integer getStoryPoints() {
+		return storyPoints;
+	}
+
+	/**
 	 * Compute done.
 	 */
 	private void computeDone() {
@@ -327,6 +340,9 @@ public class Feature {
 
 		/** The closed. */
 		private Integer closed = null;
+
+		/** The story points. */
+		private Integer storyPoints;
 
 		/**
 		 * Key.
@@ -413,6 +429,17 @@ public class Feature {
 		 */
 		public Builder closed(int theClosed) {
 			this.closed = theClosed;
+			return this;
+		}
+
+		/**
+		 * Story points.
+		 *
+		 * @param theStoryPoints the the story points
+		 * @return the builder
+		 */
+		public Builder storyPoints(int theStoryPoints) {
+			this.storyPoints = theStoryPoints;
 			return this;
 		}
 

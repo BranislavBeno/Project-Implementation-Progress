@@ -153,14 +153,22 @@ public class Features {
 		return status;
 	}
 
+	private static int parseStoryPoints(JsonNode issueField) {
+		// Get json node story points
+		JsonNode storyPoints = Optional.ofNullable(issueField.get(Stories.STORY_POINTS_FIELD_ID))
+				.orElseGet(() -> new ObjectNode(null));
+
+		return storyPoints.asInt(0);
+	}
+
 	/**
-	 * Extract features.
+	 * Parse features.
 	 *
 	 * @param jsonString the json string
 	 * @return the map
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static IFeatureDao<String, Feature> extractFeatures(final String jsonString) throws IOException {
+	public static IFeatureDao<String, Feature> parseFeatures(final String jsonString) throws IOException {
 		// Create empty features map
 		IFeatureDao<String, Feature> features = new FeatureDao();
 
@@ -185,9 +193,12 @@ public class Features {
 				// Get issue status
 				String status = parseStatus(issueFields);
 
+				// Get story points
+				int sp = parseStoryPoints(issueFields);
+
 				// Add new feature into map
 				features.save(new Feature.Builder().feature(summary).key(key).team(team)
-						.status(Status.valueOf(status.toUpperCase())).build());
+						.status(Status.valueOf(status.toUpperCase())).storyPoints(sp).build());
 			}
 		}));
 
@@ -280,7 +291,7 @@ public class Features {
 			String jsonFeatures = IssueStrategy.FEATURES.askIssueTracker(globalParams, startAt, maxResults);
 
 			// Extract features from json
-			features.saveAll(Features.extractFeatures(jsonFeatures).getAll());
+			features.saveAll(Features.parseFeatures(jsonFeatures).getAll());
 
 			// Get json node "total"
 			JsonNode total = new ObjectMapper().readTree(jsonFeatures).get("total");

@@ -40,7 +40,7 @@ class OutputCreatorTest {
 		// Get Json string
 		String jsonString = Utils.readFileContent("src/test/resources/features.json");
 		// extract features from json
-		IFeatureDao<String, Feature> features = Features.extractFeatures(jsonString);
+		IFeatureDao<String, Feature> features = Features.parseFeatures(jsonString);
 		return features;
 	}
 

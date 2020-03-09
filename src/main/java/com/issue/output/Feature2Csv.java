@@ -52,6 +52,8 @@ public class Feature2Csv {
 		sb.append(Features.printDefault(feature.getClosed()) + ";");
 		// done
 		sb.append(Features.printDefault(feature.getDone()) + ";");
+		// story points
+		sb.append(Features.printDefault(feature.getStoryPoints()) + ";");
 		// stories defined
 		sb.append(feature.isStoriesDefined() + ";");
 

@@ -313,11 +313,15 @@ public class FeatureDao2Xlsx implements Dao2Output {
 			colIdx++;
 			content2Cell(workbook, content.createCell(colIdx), feature.getRawDone(), isRowLine);
 
-			// Column 9 - Stories defined
+			// Column 9 - Story points
+			colIdx++;
+			content2Cell(workbook, content.createCell(colIdx), feature.getStoryPoints(), isRowLine);
+
+			// Column 10 - Stories defined
 			colIdx++;
 			content2Cell(workbook, content.createCell(colIdx), feature.isStoriesDefined(), isRowLine);
 
-			// Column 10 - Link to epic report
+			// Column 11 - Link to epic report
 			colIdx++;
 			content2Cell(workbook, content.createCell(colIdx), feature.getFeatureSummary() + " report",
 					globalParams.getEpicReportUri() + feature.getKey(), isRowLine);
@@ -401,7 +405,8 @@ public class FeatureDao2Xlsx implements Dao2Output {
 
 			// Define column titles
 			List<String> columnNames = List.of("Team", "Epic JIRA link", "Feature / Function", "Estimated [SPs]",
-					"Opened [SPs]", "In Progress [SPs]", "Closed [SPs]", "Done[%]", "Stories defined", "Epic report");
+					"Opened [SPs]", "In Progress [SPs]", "Closed [SPs]", "Done[%]", "Story points", "Stories defined",
+					"Epic report");
 
 			// Define header row style
 			CellStyle headerStyle = headerStyle(workbook);

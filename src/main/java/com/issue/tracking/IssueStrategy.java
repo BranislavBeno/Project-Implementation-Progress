@@ -24,7 +24,8 @@ public enum IssueStrategy implements Trackable {
 		public String askIssueTracker(GlobalParams globalParams, int startAt, int maxResults)
 				throws InterruptedException, IOException {
 			String request = Features.createRequestUri(globalParams, startAt, maxResults,
-					"key,status," + Features.FEATURE_NAME_FIELD_ID + "," + Features.SCRUM_TEAM_FIELD_ID);
+					"key,status," + Stories.STORY_POINTS_FIELD_ID + "," + Features.FEATURE_NAME_FIELD_ID + ","
+							+ Features.SCRUM_TEAM_FIELD_ID);
 
 			return Utils.gatherJsonString(globalParams.getUsername(), globalParams.getPassword(), request);
 		}

@@ -50,7 +50,7 @@ public class FeatureDao2Csv implements Dao2Output {
 
 		// add page header
 		sb.append(
-				"Team;Epic JIRA link;Feature / Function;Estimated [SPs];Opened [SPs];In Progress [SPs];Closed [SPs];Done[%];Stories defined;Epic report\n");
+				"Team;Epic JIRA link;Feature / Function;Estimated [SPs];Opened [SPs];In Progress [SPs];Closed [SPs];Done[%];Stories points;Stories defined;Epic report\n");
 
 		// add features
 		values.forEach(feature -> sb.append(new Feature2Csv(feature).toString()));

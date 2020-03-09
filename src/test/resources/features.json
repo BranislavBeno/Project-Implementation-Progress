@@ -11,6 +11,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19338"
     },
     "customfield_12641": "[Basic] Feature009",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -37,6 +38,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19338"
     },
     "customfield_12641": "[Basic] Feature012",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -323,6 +325,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19338"
     },
     "customfield_12641": "[Basic] Feature028",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -349,6 +352,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature103",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -375,6 +379,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature062",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -401,6 +406,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature039",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -427,6 +433,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature082",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -453,6 +460,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature105",
+    "customfield_10002": 1,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -479,6 +487,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature085",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -505,6 +514,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19338"
     },
     "customfield_12641": "[Basic] Feature072",
+    "customfield_10002": 2,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -531,6 +541,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature056",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -557,6 +568,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature081",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -582,7 +594,7 @@
      "id": "19237",
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
-    "customfield_12641": "[Basic] Feature057",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -609,6 +621,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature053",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -635,6 +648,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature038",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -661,6 +675,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature083",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -687,6 +702,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature102",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -713,6 +729,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature114",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -739,6 +756,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature116",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -765,6 +783,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature088",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -791,6 +810,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19235"
     },
     "customfield_12641": "[Basic] Feature101",
+    "customfield_10002": 8,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -817,6 +837,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature043",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -843,6 +864,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature087",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -1129,6 +1151,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19338"
     },
     "customfield_12641": "[Basic] Feature013",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -1155,6 +1178,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19236"
     },
     "customfield_12641": "[Basic] Feature115",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -1181,6 +1205,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19236"
     },
     "customfield_12641": "[Basic] Feature064",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -1207,6 +1232,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19236"
     },
     "customfield_12641": "[Basic] Feature058",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -1233,6 +1259,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19236"
     },
     "customfield_12641": "[Basic] Feature109",
+    "customfield_10002": 3,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -1259,6 +1286,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19235"
     },
     "customfield_12641": "[Basic] Feature107",
+    "customfield_10002": 0,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
@@ -1285,6 +1313,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19237"
     },
     "customfield_12641": "[Basic] Feature117",
+    "customfield_10002": null,
     "status": {
      "statusCategory": {
       "key": "new",
@@ -1311,6 +1340,7 @@
      "self": "http://jira/rest/api/2/customFieldOption/19236"
     },
     "customfield_12641": "[Basic] Feature055",
+    "customfield_10002": 13,
     "status": {
      "statusCategory": {
       "key": "indeterminate",
