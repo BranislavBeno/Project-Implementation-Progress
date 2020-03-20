@@ -8302,12 +8302,12 @@
       "colorName": "green",
       "id": 3,
       "self": "http://jira/rest/api/2/statuscategory/3",
-      "name": "Done"
+      "name": "To Do"
      },
      "id": "5",
      "iconUrl": "http://jira/images/icons/statuses/resolved.png",
      "self": "http://jira/rest/api/2/status/5",
-     "name": "Resolved"
+     "name": "Ready"
     }
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",

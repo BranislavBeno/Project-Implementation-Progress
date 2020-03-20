@@ -5,7 +5,6 @@ import com.issue.contract.Progressable;
 /**
  * The Enum Status.
  */
-
 public enum Status implements Progressable {
 
 	/** The closed. */
@@ -136,6 +135,13 @@ public enum Status implements Progressable {
 	},
 	/** The ready for refinement. */
 	READY_FOR_REFINEMENT {
+		@Override
+		public ProgressStatus workProgress() {
+			return ProgressStatus.OPENED;
+		}
+	},
+	/** The ready. */
+	READY {
 		@Override
 		public ProgressStatus workProgress() {
 			return ProgressStatus.OPENED;
