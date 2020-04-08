@@ -2,7 +2,7 @@ sep=;
 Team;Epic JIRA link;Feature / Function;Estimated [SPs];Opened [SPs];In Progress [SPs];Closed [SPs];Done[%];Stories points;Stories defined;Epic report
 ;ISSUE-8906;[Basic] Feature073;89;2;6;81;91%;0;true;
 ;ISSUE-8908;[Basic] Feature090;71;n/a;2;66;92%;0;true;
-TeamFive;ISSUE-9548;[Basic] Feature040;22;n/a;1;21;95%;0;true;
+TeamFive;ISSUE-9548;[Basic] Feature040;22;2;1;19;86%;0;true;
 TeamFive;ISSUE-9568;[Basic] Feature048;7;n/a;n/a;7;100%;0;true;
 TeamFive;ISSUE-9578;[Basic] Feature049;40;8;n/a;32;80%;0;true;
 TeamFive;ISSUE-9255;[Basic] Feature052;59;n/a;n/a;59;100%;0;true;
