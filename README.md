@@ -1,10 +1,8 @@
 # Implementation Progress
 
-[![pipeline status](https://gitlab.websupport.sk/biea/implementation-progress/badges/master/pipeline.svg)](https://gitlab.websupport.sk/biea/implementation-progress/commits/master)
-[![coverage report](https://gitlab.websupport.sk/biea/implementation-progress/badges/master/coverage.svg)](https://gitlab.websupport.sk/biea/implementation-progress/commits/master)
-[![Gradle](https://img.shields.io/badge/gradle-v6.3-blue)](https://img.shields.io/badge/gradle-v6.3-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
+[![Gradle](https://img.shields.io/badge/gradle-v6.3-blue)](https://img.shields.io/badge/gradle-v6.3-blue)
+[![Build Status](https://travis-ci.org/BranislavBeno/Project-Implementation-Progress.svg?branch=master)](https://travis-ci.org/BranislavBeno/Project-Implementation-Progress)
 
 Abstract
 ========
