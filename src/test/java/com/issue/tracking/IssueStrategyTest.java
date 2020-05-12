@@ -55,7 +55,7 @@ class IssueStrategyTest {
 		// Get features json
 		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, 0, 1000);
 
-		assertThat(jsonString).isNotNull();
+		assertThat(jsonString).isNull();
 	}
 
 	/**
