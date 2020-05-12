@@ -10,7 +10,7 @@ jdk: openjdk11
 
 addons:
   sonarcloud:
-    organization: "BranislavBeno"
+    organization: "branislavbeno"
     token:
       secure: ${SONAR_TOKEN}
 
