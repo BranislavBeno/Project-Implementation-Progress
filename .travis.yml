@@ -10,9 +10,9 @@ jdk: openjdk11
 
 addons:
   sonarcloud:
-    organization: "branislavbeno"
+    organization: "BranislavBeno"
     token:
-      secure: "6af30c0db20fc34ea3582e70265c7f4987fb1df5"
+      secure: ${SONAR_TOKEN}
 
 script:
   # Use Gradle as tester
