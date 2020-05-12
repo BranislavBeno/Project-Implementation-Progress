@@ -8,8 +8,14 @@ language: java
 install: true
 jdk: openjdk11
 
+addons:
+  sonarcloud:
+    organization: "branislavbeno"
+    token:
+      secure: "6af30c0db20fc34ea3582e70265c7f4987fb1df5"
+
 script:
   # Use Gradle as tester
   - ./gradlew test
   # Trigger with Gradle static and dynamic code analysis
-  #- ./gradlew sonarqube
+  - ./gradlew sonarqube
