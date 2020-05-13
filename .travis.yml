@@ -1,4 +1,4 @@
-# Build very simple java library with Gradle, Open JDK 11
+# Build java application for gather and visualize data about project implementation progress
 
 before_install:
   # Set Gradle builder executable permissions
@@ -8,14 +8,8 @@ language: java
 install: true
 jdk: openjdk11
 
-addons:
-  sonarcloud:
-    organization: "branislavbeno"
-    token:
-      secure: ${SONAR_TOKEN}
-
 script:
   # Use Gradle as tester
   - ./gradlew test
   # Trigger with Gradle static and dynamic code analysis
-  - ./gradlew sonarqube
+  - ./gradlew jacocoTestReport sonarqube
