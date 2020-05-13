@@ -21,6 +21,8 @@ targetCompatibility = JavaVersion.VERSION_11
 
 ext {
   junitVersion = '5.4.2'
+  sonarProjectName = 'ImplProgress'
+  sonarProjectKey = 'com.issue.implprogress'
   jacocoDestinationFile = file("$buildDir/jacoco/test.exec")
 }
 

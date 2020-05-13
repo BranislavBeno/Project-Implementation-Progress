@@ -1,8 +1,12 @@
 # Implementation Progress
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Gradle](https://img.shields.io/badge/gradle-v6.3-blue)](https://img.shields.io/badge/gradle-v6.3-blue)
+[![Gradle](https://img.shields.io/badge/gradle-v6.4-blue)](https://img.shields.io/badge/gradle-v6.4-blue)
 [![Build Status](https://travis-ci.org/BranislavBeno/Project-Implementation-Progress.svg?branch=master)](https://travis-ci.org/BranislavBeno/Project-Implementation-Progress)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplProgress&metric=alert_status)](https://sonarcloud.io/dashboard?id=BranislavBeno_ImplProgress)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplProgress&metric=coverage)](https://sonarcloud.io/dashboard?id=BranislavBeno_ImplProgress)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplProgress&metric=ncloc)](https://sonarcloud.io/dashboard?id=BranislavBeno_ImplProgress)
+
 
 Abstract
 ========
