@@ -4,7 +4,7 @@
 [![Gradle](https://img.shields.io/badge/gradle-v6.4-blue)](https://img.shields.io/badge/gradle-v6.4-blue)
 [![Build Status](https://travis-ci.org/BranislavBeno/Project-Implementation-Progress.svg?branch=master)](https://travis-ci.org/BranislavBeno/Project-Implementation-Progress)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplProgress&metric=alert_status)](https://sonarcloud.io/dashboard?id=BranislavBeno_ImplProgress)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplProgress&metric=coverage)](https://sonarcloud.io/dashboard?id=BranislavBeno_ImplProgress)
+[![Coverage](https://img.shields.io/sonar/coverage/BranislavBeno_ImplProgress?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=BranislavBeno_ImplProgress)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplProgress&metric=ncloc)](https://sonarcloud.io/dashboard?id=BranislavBeno_ImplProgress)
 
 
