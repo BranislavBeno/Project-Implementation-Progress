@@ -52,10 +52,13 @@ class IssueStrategyTest {
 		GlobalParams globalParams = Utils
 				.provideGlobalParams("src/test/resources/test_negative1_application.properties");
 
+		// Get expected output
+		String expected = Utils.readFileContent("src/test/resources/placeholder.json");
+
 		// Get features json
 		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, 0, 1000);
 
-		assertThat(jsonString).isNull();
+		assertThat(jsonString).isEqualTo(expected);
 	}
 
 	/**

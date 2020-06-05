@@ -1,7 +1,10 @@
+Changes against version 1.2.0
+-----------------------------
+- Added new stories statuses 'Verified', 'Validated', 'Discarded'
+
 Changes against version 1.1.0
 -----------------------------
 - Added new stories status 'Ready'
-
 
 Changes against version 1.0.0
 -----------------------------

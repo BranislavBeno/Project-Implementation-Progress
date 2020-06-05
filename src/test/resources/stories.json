@@ -3621,7 +3621,7 @@
      "id": "5",
      "iconUrl": "http://jira/images/icons/statuses/resolved.png",
      "self": "http://jira/rest/api/2/status/5",
-     "name": "Resolved"
+     "name": "Validated"
     }
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
@@ -4017,7 +4017,7 @@
      "id": "5",
      "iconUrl": "http://jira/images/icons/statuses/resolved.png",
      "self": "http://jira/rest/api/2/status/5",
-     "name": "Resolved"
+     "name": "Verified"
     }
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
@@ -4501,7 +4501,7 @@
      "id": "5",
      "iconUrl": "http://jira/images/icons/statuses/resolved.png",
      "self": "http://jira/rest/api/2/status/5",
-     "name": "Resolved"
+     "name": "Discarded"
     }
    },
    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",

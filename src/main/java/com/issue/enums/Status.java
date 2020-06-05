@@ -146,5 +146,26 @@ public enum Status implements Progressable {
 		public ProgressStatus workProgress() {
 			return ProgressStatus.OPENED;
 		}
+	},
+	/** The validated. */
+	VALIDATED {
+		@Override
+		public ProgressStatus workProgress() {
+			return ProgressStatus.CLOSED;
+		}
+	},
+	/** The verified. */
+	VERIFIED {
+		@Override
+		public ProgressStatus workProgress() {
+			return ProgressStatus.CLOSED;
+		}
+	},
+	/** The discarded. */
+	DISCARDED {
+		@Override
+		public ProgressStatus workProgress() {
+			return ProgressStatus.N_A;
+		}
 	};
 }

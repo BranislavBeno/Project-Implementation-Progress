@@ -1,26 +1,19 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8"
-    }
+plugins {
+  id 'java'
+  id 'java-library'
+  id 'application'
+  id 'jacoco'
+  id 'com.github.johnrengelman.shadow' version '5.2.0'
+  id 'org.sonarqube' version '2.8'
 }
 
-apply plugin: 'java'
-apply plugin: 'java-library'
-apply plugin: 'application'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'org.sonarqube'
-
 mainClassName = 'com.issue.progress.TransformControl'
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
 ext {
-  junitVersion = '5.4.2'
+  junitVersion = '5.6.2'
   sonarProjectName = 'ImplProgress'
   sonarProjectKey = 'com.issue.implprogress'
   jacocoDestinationFile = file("$buildDir/jacoco/test.exec")
@@ -47,27 +40,26 @@ test {
 }
 
 dependencies {
-  implementation "com.fasterxml.jackson.core:jackson-databind:2.9.9"
-  implementation "org.apache.poi:poi-ooxml:4.1.1"
-  implementation "org.apache.logging.log4j:log4j-core:2.13.0"
-  implementation "org.apache.logging.log4j:log4j-api:2.13.0"
-  implementation "info.picocli:picocli:4.2.0"
+  implementation "com.fasterxml.jackson.core:jackson-databind:2.11.0"
+  implementation "org.apache.poi:poi-ooxml:4.1.2"
+  implementation "org.apache.logging.log4j:log4j-core:2.13.3"
+  implementation "org.apache.logging.log4j:log4j-api:2.13.3"
+  implementation "info.picocli:picocli:4.3.2"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
   testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
   testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
-  testImplementation "org.junit.platform:junit-platform-launcher:1.5.2"
-  testImplementation "org.assertj:assertj-core:3.13.2"
-  testCompileOnly "org.apiguardian:apiguardian-api:1.0.0"
+  testImplementation "org.junit.platform:junit-platform-launcher:1.6.2"
+  testImplementation "org.assertj:assertj-core:3.16.1"
+  testCompileOnly "org.apiguardian:apiguardian-api:1.1.0"
 }
 
 def versionMajor = 1
-def versionMinor = 2
+def versionMinor = 3
 def versionPatch = 0
-def versionBuild = 3
+def versionBuild = 4
 version = "R${versionMajor}.${versionMinor}.${versionPatch}"
 
 jar{
-  setArchiveBaseName('ImplProgress.' + archiveExtension)
   manifest{
     attributes 'Specification-Title': rootProject.name,
     'Specification-Version': archiveVersion,
@@ -75,6 +67,10 @@ jar{
     'Implementation-Version': versionBuild,
     'Main-Class': 'com.issue.progress.TransformControl'
   }
+}
+
+shadowJar{
+  setArchiveFileName('ImplProgress.jar')
 }
 
 jacoco {
@@ -90,6 +86,5 @@ jacocoTestReport {
 sonarqube {
   properties {
     property "sonar.projectKey", "BranislavBeno_ImplProgress"
-
   }
 }
