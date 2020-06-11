@@ -56,7 +56,7 @@ class IssueStrategyTest {
 		String expected = Utils.readFileContent("src/test/resources/placeholder.json");
 
 		// Get features json
-		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, 0, 1000);
+		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, null, 0, 1000);
 
 		assertThat(jsonString).isEqualTo(expected);
 	}
@@ -74,7 +74,7 @@ class IssueStrategyTest {
 				.provideGlobalParams("src/test/resources/test_negative2_application.properties");
 
 		// Get features json
-		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, 0, 1000);
+		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, "", 0, 1000);
 
 		assertThat(jsonString).isEqualTo("{\"authenticated\":true}");
 	}

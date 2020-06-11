@@ -21,9 +21,9 @@ public enum IssueStrategy implements Trackable {
 	/** The features. */
 	FEATURES {
 		@Override
-		public String askIssueTracker(GlobalParams globalParams, int startAt, int maxResults)
+		public String askIssueTracker(GlobalParams globalParams, String query, int startAt, int maxResults)
 				throws InterruptedException, IOException {
-			String request = Features.createRequestUri(globalParams, startAt, maxResults,
+			String request = Features.createRequestUri(globalParams.getIssueTrackerUri(), query, startAt, maxResults,
 					"key,status," + Stories.STORY_POINTS_FIELD_ID + "," + Features.FEATURE_NAME_FIELD_ID + ","
 							+ Features.SCRUM_TEAM_FIELD_ID);
 
@@ -34,9 +34,9 @@ public enum IssueStrategy implements Trackable {
 	/** The stories. */
 	STORIES {
 		@Override
-		public String askIssueTracker(GlobalParams globalParams, int startAt, int maxResults)
+		public String askIssueTracker(GlobalParams globalParams, String query, int startAt, int maxResults)
 				throws InterruptedException, IOException {
-			String request = Stories.createRequestUri(globalParams, startAt, maxResults,
+			String request = Stories.createRequestUri(globalParams, query, startAt, maxResults,
 					"status," + Stories.STORY_POINTS_FIELD_ID + "," + Stories.EPIC_LINK_FIELD_ID);
 
 			return Utils.gatherJsonString(globalParams.getUsername(), globalParams.getPassword(), request);

@@ -18,12 +18,13 @@ public interface Trackable {
 	 * Ask issue tracker.
 	 *
 	 * @param globalParams the global params
-	 * @param startAt      the start at
-	 * @param maxResults   the max results
+	 * @param query the query
+	 * @param startAt the start at
+	 * @param maxResults the max results
 	 * @return the string
-	 * @throws IOException          Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws InterruptedException the interrupted exception
 	 */
-	abstract String askIssueTracker(GlobalParams globalParams, int startAt, int maxResults)
+	abstract String askIssueTracker(GlobalParams globalParams, String query, int startAt, int maxResults)
 			throws IOException, InterruptedException;
 }

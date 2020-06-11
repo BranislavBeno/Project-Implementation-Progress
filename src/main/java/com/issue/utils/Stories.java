@@ -160,16 +160,18 @@ public class Stories {
 	 * Creates the request uri.
 	 *
 	 * @param globalParams the global params
-	 * @param startAt      the start at
-	 * @param maxResults   the max results
-	 * @param fields       the fields
+	 * @param query the query
+	 * @param startAt the start at
+	 * @param maxResults the max results
+	 * @param fields the fields
 	 * @return the string
 	 */
-	public static String createRequestUri(GlobalParams globalParams, int startAt, int maxResults, String fields) {
+	public static String createRequestUri(GlobalParams globalParams, String query, int startAt, int maxResults,
+			String fields) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(globalParams.getIssueTrackerUri()).append("?").append("jql=")
-				.append(Utils.prepareUrl(globalParams.getStoriesQuery())).append("&maxResults=").append(maxResults)
-				.append("&fields=").append(fields).append("&startAt=").append(startAt);
+		sb.append(globalParams.getIssueTrackerUri()).append("?").append("jql=").append(Utils.prepareUrl(query))
+				.append("&maxResults=").append(maxResults).append("&fields=").append(fields).append("&startAt=")
+				.append(startAt);
 		return sb.toString();
 	}
 
@@ -177,11 +179,12 @@ public class Stories {
 	 * Creates the stories repo.
 	 *
 	 * @param globalParams the global params
+	 * @param query the query
 	 * @return the i story dao
-	 * @throws IOException          Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws InterruptedException the interrupted exception
 	 */
-	public static IStoryDao<Story> createStoriesRepo(GlobalParams globalParams)
+	public static IStoryDao<Story> createStoriesRepo(GlobalParams globalParams, String query)
 			throws IOException, InterruptedException {
 
 		// Set initials for stories gathering
@@ -194,7 +197,7 @@ public class Stories {
 
 		do {
 			// Get json response
-			String jsonStories = IssueStrategy.STORIES.askIssueTracker(globalParams, startAt, maxResults);
+			String jsonStories = IssueStrategy.STORIES.askIssueTracker(globalParams, query, startAt, maxResults);
 
 			// Extract stories from json
 			stories.saveAll(Stories.parseStories(jsonStories).getAll());

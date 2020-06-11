@@ -95,8 +95,10 @@ public class Features {
 	}
 
 	/**
-	 * @param issue
-	 * @return
+	 * Parses the key.
+	 *
+	 * @param issue the issue
+	 * @return the string
 	 */
 	private static String parseKey(JsonNode issue) {
 		// Get json node "summary"
@@ -106,8 +108,10 @@ public class Features {
 	}
 
 	/**
-	 * @param issueFields
-	 * @return
+	 * Parses the summary.
+	 *
+	 * @param issueFields the issue fields
+	 * @return the string
 	 */
 	private static String parseSummary(JsonNode issueFields) {
 		// Get json node "summary"
@@ -118,8 +122,10 @@ public class Features {
 	}
 
 	/**
-	 * @param issueFields
-	 * @return
+	 * Parses the team.
+	 *
+	 * @param issueFields the issue fields
+	 * @return the string
 	 */
 	private static String parseTeam(JsonNode issueFields) {
 		// Initialize team
@@ -136,8 +142,10 @@ public class Features {
 	}
 
 	/**
-	 * @param issueFields
-	 * @return
+	 * Parses the status.
+	 *
+	 * @param issueFields the issue fields
+	 * @return the string
 	 */
 	private static String parseStatus(JsonNode issueFields) {
 		// Initialize status
@@ -153,6 +161,12 @@ public class Features {
 		return status;
 	}
 
+	/**
+	 * Parses the story points.
+	 *
+	 * @param issueField the issue field
+	 * @return the int
+	 */
 	private static int parseStoryPoints(JsonNode issueField) {
 		// Get json node story points
 		JsonNode storyPoints = Optional.ofNullable(issueField.get(Stories.STORY_POINTS_FIELD_ID))
@@ -253,17 +267,18 @@ public class Features {
 	/**
 	 * Creates the request uri.
 	 *
-	 * @param globalParams the global params
-	 * @param startAt      the start at
-	 * @param maxResults   the max results
-	 * @param fields       the fields
+	 * @param issueTrackerUri the issue tracker uri
+	 * @param query the query
+	 * @param startAt the start at
+	 * @param maxResults the max results
+	 * @param fields the fields
 	 * @return the string
 	 */
-	public static String createRequestUri(GlobalParams globalParams, int startAt, int maxResults, String fields) {
+	public static String createRequestUri(final String issueTrackerUri, final String query, final int startAt,
+			final int maxResults, final String fields) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(globalParams.getIssueTrackerUri()).append("?").append("jql=")
-				.append(Utils.prepareUrl(globalParams.getFeaturesQuery())).append("&maxResults=").append(maxResults)
-				.append("&fields=").append(fields).append("&startAt=").append(startAt);
+		sb.append(issueTrackerUri).append("?").append("jql=").append(Utils.prepareUrl(query)).append("&maxResults=")
+				.append(maxResults).append("&fields=").append(fields).append("&startAt=").append(startAt);
 		return sb.toString();
 	}
 
@@ -271,11 +286,12 @@ public class Features {
 	 * Creates the features repo.
 	 *
 	 * @param globalParams the global params
+	 * @param query the query
 	 * @return the i feature dao
-	 * @throws IOException          Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws InterruptedException the interrupted exception
 	 */
-	public static IFeatureDao<String, Feature> createFeaturesRepo(GlobalParams globalParams)
+	public static IFeatureDao<String, Feature> createFeaturesRepo(GlobalParams globalParams, String query)
 			throws IOException, InterruptedException {
 
 		// Set initials for stories gathering
@@ -288,7 +304,7 @@ public class Features {
 
 		do {
 			// Get json response
-			String jsonFeatures = IssueStrategy.FEATURES.askIssueTracker(globalParams, startAt, maxResults);
+			String jsonFeatures = IssueStrategy.FEATURES.askIssueTracker(globalParams, query, startAt, maxResults);
 
 			// Extract features from json
 			features.saveAll(Features.parseFeatures(jsonFeatures).getAll());

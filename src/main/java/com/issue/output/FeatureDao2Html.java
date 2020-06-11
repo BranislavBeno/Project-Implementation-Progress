@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import com.issue.configuration.GlobalParams;
 import com.issue.contract.Dao2Output;
 import com.issue.contract.IFeatureDao;
 import com.issue.model.Feature;
@@ -68,18 +67,18 @@ public class FeatureDao2Html implements Dao2Output {
 	/** The dao. */
 	private IFeatureDao<String, Feature> dao;
 
-	/** The global params. */
-	private GlobalParams globalParams;
+	/** The output file name. */
+	private String outputFileName;
 
 	/**
 	 * Instantiates a new feature dao 2 html.
 	 *
-	 * @param dao          the dao
-	 * @param globalParams the global params
+	 * @param dao the dao
+	 * @param outputFileName the output file name
 	 */
-	public FeatureDao2Html(IFeatureDao<String, Feature> dao, GlobalParams globalParams) {
+	public FeatureDao2Html(IFeatureDao<String, Feature> dao, String outputFileName) {
 		this.dao = dao;
-		this.globalParams = globalParams;
+		this.outputFileName = outputFileName;
 	}
 
 	/**
@@ -222,6 +221,6 @@ public class FeatureDao2Html implements Dao2Output {
 	 */
 	@Override
 	public String provideOutputFileName() {
-		return globalParams.getOutputFileName4Html();
+		return this.outputFileName;
 	}
 }

@@ -15,13 +15,19 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.issue.configuration.GlobalParams;
+import com.issue.configuration.ProjectPhase;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
 import com.issue.model.Feature;
@@ -66,6 +72,43 @@ public class Utils {
 	}
 
 	/**
+	 * Parses the phases.
+	 *
+	 * @param props the props
+	 * @return the list
+	 */
+	private static List<ProjectPhase> parsePhases(final Properties props) {
+		// Extract only phase related property names
+		Set<String> phaseSet = props.keySet().stream().filter(p -> p.toString().startsWith("phase"))
+				.map(s -> s.toString().substring(0, s.toString().indexOf('.'))).collect(Collectors.toSet());
+
+		// Initialize list of phases
+		List<ProjectPhase> phases = new ArrayList<>();
+
+		// Iterate over list of filtered properties
+		for (String phase : phaseSet) {
+			// Get features query
+			String featQuery = props.getProperty(phase + ".query.features");
+			// Get stories query
+			String storyQuery = props.getProperty(phase + ".query.stories");
+			// Get html output file name
+			String htmlOutput = props.getProperty(phase + ".output.html", null);
+			// Get csv output file name
+			String csvOutput = props.getProperty(phase + ".output.csv", null);
+
+			// Create new project phase object
+			ProjectPhase projectPhase = new ProjectPhase(featQuery, storyQuery);
+			projectPhase.setOutputFileName4Html(htmlOutput);
+			projectPhase.setOutputFileName4Csv(csvOutput);
+
+			// Add created project phase object into output list
+			phases.add(projectPhase);
+		}
+
+		return phases;
+	}
+
+	/**
 	 * Provide global params.
 	 *
 	 * @param propFile the prop file
@@ -83,11 +126,10 @@ public class Utils {
 		globalParams.setIssueTrackerUri(props.getProperty("issueTrackerUri"));
 		globalParams.setIssueUri(props.getProperty("issueUri"));
 		globalParams.setEpicReportUri(props.getProperty("epicReportUri"));
-		globalParams.setOutputFileName4Html(props.getProperty("htmlOutputFile"));
-		globalParams.setOutputFileName4Csv(props.getProperty("csvOutputFile"));
 		globalParams.setOutputFileName4Xlsx(props.getProperty("xlsxOutputFile"));
-		globalParams.setFeaturesQuery(props.getProperty("featuresQuery", "issuetype = Feature"));
-		globalParams.setStoriesQuery(props.getProperty("storiesQuery", "issuetype = Story"));
+
+		// Get phase related property values
+		globalParams.setPhases(parsePhases(props));
 
 		return globalParams;
 	}
@@ -225,6 +267,38 @@ public class Utils {
 	}
 
 	/**
+	 * Handle csv output.
+	 *
+	 * @param phase    the phase
+	 * @param features the features
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private static void handleCsvOutput(ProjectPhase phase, IFeatureDao<String, Feature> features) throws IOException {
+		try {
+			OutputCreators.createCsvOutput(features, phase.getOutputFileName4Csv());
+			logger.info("File with CSV content created successfully.");
+		} catch (IllegalArgumentException e) {
+			logger.warn("No file name for CSV output in properties file defined.");
+		}
+	}
+
+	/**
+	 * Handle html output.
+	 *
+	 * @param phase    the phase
+	 * @param features the features
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private static void handleHtmlOutput(ProjectPhase phase, IFeatureDao<String, Feature> features) throws IOException {
+		try {
+			OutputCreators.createHtmlOutput(features, phase.getOutputFileName4Html());
+			logger.info("File with HTML content created successfully.");
+		} catch (IllegalArgumentException e) {
+			logger.warn("No file name for HTML output in properties file defined.");
+		}
+	}
+
+	/**
 	 * Run progress.
 	 *
 	 * @param user   the user
@@ -245,42 +319,45 @@ public class Utils {
 		// Set password for issue tracker authentication
 		globalParams.setPassword(passwd);
 
-		// Create features repository
-		IFeatureDao<String, Feature> features = Features.createFeaturesRepo(globalParams);
-		logger.info("{} features processed.", features.size());
-
-		// Create stories repository
-		IStoryDao<Story> stories = Stories.createStoriesRepo(globalParams);
-		logger.info("{} stories processed.", stories.size());
-
-		// Import stories data into features map
-		Stories.importStories(features, stories);
-
-		// Create HTML output
 		try {
-			OutputCreators.createHtmlOutput(features, globalParams);
-			logger.info("File with HTML content created successfully.");
-		} catch (IllegalArgumentException e) {
-			logger.warn("No file name for HTML output in properties file defined.");
-		}
+			// Get list of phases
+			List<ProjectPhase> phases = globalParams.getPhases().orElseThrow();
 
-		// Create CSV output
-		try {
-			OutputCreators.createCsvOutput(features, globalParams);
-			logger.info("File with CSV content created successfully.");
-		} catch (IllegalArgumentException e) {
-			logger.warn("No file name for CSV output in properties file defined.");
-		}
+			// Iterate over all phases
+			for (ProjectPhase phase : phases) {
+				// Create features repository for particular phase
+				IFeatureDao<String, Feature> features = Features.createFeaturesRepo(globalParams,
+						phase.getFeaturesQuery());
+				logger.info("{} features processed.", features.size());
 
-		// Create XLSX output
-		try {
-			OutputCreators.createXlsxOutput(features, globalParams);
-			logger.info("File with XLSX content created successfully.");
-		} catch (IllegalArgumentException e) {
-			logger.warn("No file name for XLSX output in properties file defined.");
-		}
+				// Create stories repository for particular phase
+				IStoryDao<Story> stories = Stories.createStoriesRepo(globalParams, phase.getStoriesQuery());
+				logger.info("{} stories processed.", stories.size());
 
-		// Processing finished.
-		logger.info("Processing finished.");
+				// Import stories data into features map for particular phase
+				Stories.importStories(features, stories);
+
+				// Create HTML output for particular phase
+				handleHtmlOutput(phase, features);
+
+				// Create CSV output for particular phase
+				handleCsvOutput(phase, features);
+			}
+
+			/*
+			 * // Create XLSX output try { OutputCreators.createXlsxOutput(features,
+			 * globalParams); logger.info("File with XLSX content created successfully."); }
+			 * catch (IllegalArgumentException e) {
+			 * logger.warn("No file name for XLSX output in properties file defined."); }
+			 */
+			// Processing finished successfully.
+			logger.info("Processing finished.");
+
+		} catch (NoSuchElementException e) {
+			// Processing finished with exception.
+			logger.error(
+					"Processing failed due to no list of queries for data gathering. Check application.properties file.");
+		}
 	}
+
 }

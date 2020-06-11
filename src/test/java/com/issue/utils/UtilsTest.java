@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.issue.configuration.GlobalParams;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
 import com.issue.model.Feature;
@@ -25,9 +24,6 @@ import com.issue.output.FeatureDao2Html;
  * The Class UtilsTest.
  */
 class UtilsTest {
-
-	/** The global params. */
-	private GlobalParams globalParams;
 
 	/** The features. */
 	IFeatureDao<String, Feature> features;
@@ -41,9 +37,6 @@ class UtilsTest {
 	private void prepareResources() throws IOException {
 		// Provide features repo
 		features = featuresRepo();
-
-		// Provide global parameters
-		globalParams = Utils.provideGlobalParams("src/test/resources/test_positive_application.properties");
 	}
 
 	/**
@@ -121,7 +114,7 @@ class UtilsTest {
 		expected = expected.replaceAll("\\d{4}-\\d{2}-\\d{2}", currentDate);
 
 		assertThat(features.size()).isEqualTo(117);
-		assertThat(new FeatureDao2Html(features, globalParams).provideContent()).isEqualTo(expected);
+		assertThat(new FeatureDao2Html(features, "").provideContent()).isEqualTo(expected);
 	}
 
 	/**
@@ -135,7 +128,7 @@ class UtilsTest {
 		// Get expected output
 		String expected = Utils.readFileContent("src/test/resources/basic.csv");
 
-		assertThat(new FeatureDao2Csv(features, globalParams).provideContent()).isEqualTo(expected);
+		assertThat(new FeatureDao2Csv(features, "").provideContent()).isEqualTo(expected);
 	}
 
 	/**

@@ -3,6 +3,7 @@
  */
 package com.issue.configuration;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,20 +31,11 @@ public class GlobalParams {
 	/** The password. */
 	private String password;
 
-	/** The output file name for html. */
-	private String outputFileName4Html;
-
-	/** The output file name for csv. */
-	private String outputFileName4Csv;
-
 	/** The output file name 4 xlsx. */
 	private String outputFileName4Xlsx;
 
-	/** The features query. */
-	private String featuresQuery;
-
-	/** The stories query. */
-	private String storiesQuery;
+	/** The phases. */
+	private List<ProjectPhase> phases;
 
 	/**
 	 * Instantiates a new global params.
@@ -155,39 +147,21 @@ public class GlobalParams {
 	}
 
 	/**
-	 * Gets the output file name for html.
+	 * Gets the phases.
 	 *
-	 * @return the output file name for html
+	 * @return the phases
 	 */
-	public String getOutputFileName4Html() {
-		return outputFileName4Html;
+	public Optional<List<ProjectPhase>> getPhases() {
+		return Optional.ofNullable(phases);
 	}
 
 	/**
-	 * Sets the output file name 4 html.
+	 * Sets the phases.
 	 *
-	 * @param outputFileName4Html the new output file name 4 html
+	 * @param phases the phases to set
 	 */
-	public void setOutputFileName4Html(String outputFileName4Html) {
-		this.outputFileName4Html = Optional.ofNullable(outputFileName4Html).orElse(null);
-	}
-
-	/**
-	 * Gets the output file name for csv.
-	 *
-	 * @return the output file name for csv
-	 */
-	public String getOutputFileName4Csv() {
-		return outputFileName4Csv;
-	}
-
-	/**
-	 * Sets the output file name 4 csv.
-	 *
-	 * @param outputFileName4Csv the new output file name 4 csv
-	 */
-	public void setOutputFileName4Csv(String outputFileName4Csv) {
-		this.outputFileName4Csv = Optional.ofNullable(outputFileName4Csv).orElse(null);
+	public void setPhases(List<ProjectPhase> phases) {
+		this.phases = phases;
 	}
 
 	/**
@@ -206,41 +180,5 @@ public class GlobalParams {
 	 */
 	public void setOutputFileName4Xlsx(String outputFileName4Xlsx) {
 		this.outputFileName4Xlsx = Optional.ofNullable(outputFileName4Xlsx).orElse(null);
-	}
-
-	/**
-	 * Gets the features query.
-	 *
-	 * @return the features query
-	 */
-	public String getFeaturesQuery() {
-		return featuresQuery;
-	}
-
-	/**
-	 * Sets the features query.
-	 *
-	 * @param featuresQuery the new features query
-	 */
-	public void setFeaturesQuery(String featuresQuery) {
-		this.featuresQuery = Optional.ofNullable(featuresQuery).orElse("");
-	}
-
-	/**
-	 * Gets the stories query.
-	 *
-	 * @return the stories query
-	 */
-	public String getStoriesQuery() {
-		return storiesQuery;
-	}
-
-	/**
-	 * Sets the stories query.
-	 *
-	 * @param storiesQuery the new stories query
-	 */
-	public void setStoriesQuery(String storiesQuery) {
-		this.storiesQuery = Optional.ofNullable(storiesQuery).orElse("");
 	}
 }

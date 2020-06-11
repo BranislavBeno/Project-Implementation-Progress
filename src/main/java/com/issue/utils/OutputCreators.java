@@ -29,30 +29,30 @@ public class OutputCreators {
 	}
 
 	/**
-	 * Creates the html output. Utils
-	 * 
-	 * @param features     the features
-	 * @param globalParams the global params
+	 * Creates the html output.
+	 *
+	 * @param features the features
+	 * @param outputFileName the output file name
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void createHtmlOutput(IFeatureDao<String, Feature> features, GlobalParams globalParams)
+	public static void createHtmlOutput(IFeatureDao<String, Feature> features, String outputFileName)
 			throws IOException {
 		// print features to HTML
-		OutputCreator outputCreator = new OutputCreator(new FeatureDao2Html(features, globalParams));
+		OutputCreator outputCreator = new OutputCreator(new FeatureDao2Html(features, outputFileName));
 		outputCreator.createOutputFile();
 	}
 
 	/**
 	 * Creates the csv output.
 	 *
-	 * @param features     the features
-	 * @param globalParams the global params
+	 * @param features the features
+	 * @param outputFileName the output file name
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void createCsvOutput(IFeatureDao<String, Feature> features, GlobalParams globalParams)
+	public static void createCsvOutput(IFeatureDao<String, Feature> features, String outputFileName)
 			throws IOException {
 		// print features to CSV
-		OutputCreator outputCreator = new OutputCreator(new FeatureDao2Csv(features, globalParams));
+		OutputCreator outputCreator = new OutputCreator(new FeatureDao2Csv(features, outputFileName));
 		outputCreator.createOutputFile();
 	}
 
@@ -61,6 +61,7 @@ public class OutputCreators {
 	 *
 	 * @param features     the features
 	 * @param globalParams the global params
+	 * @return the dao 2 output
 	 */
 	public static Dao2Output createXlsxOutput(IFeatureDao<String, Feature> features, GlobalParams globalParams) {
 		// print features to XLSX
