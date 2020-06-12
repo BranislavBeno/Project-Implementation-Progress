@@ -36,12 +36,18 @@ class FeaturesTest {
 		}
 	}
 
+	/**
+	 * Test negative features json with no connection.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	void testNegativeFeaturesJsonWithNoConnection() throws InterruptedException, IOException {
-		// provide global parameters
+		// Provide global parameters
 		GlobalParams globalParams = Utils.provideGlobalParams("src/test/resources/test_real_application.properties");
 
 		// Get features
-		assertThrows(ConnectException.class, () -> Features.createFeaturesRepo(globalParams));
+		assertThrows(ConnectException.class, () -> Features.createFeaturesRepo(globalParams, "issuetype = Feature"));
 	}
 }

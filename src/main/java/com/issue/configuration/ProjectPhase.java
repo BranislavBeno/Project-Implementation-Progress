@@ -76,29 +76,11 @@ public class ProjectPhase {
 	}
 
 	/**
-	 * Sets the features query.
-	 *
-	 * @param featuresQuery the new features query
-	 */
-	public void setFeaturesQuery(String featuresQuery) {
-		this.featuresQuery = Optional.ofNullable(featuresQuery).orElse("");
-	}
-
-	/**
 	 * Gets the stories query.
 	 *
 	 * @return the stories query
 	 */
 	public String getStoriesQuery() {
 		return storiesQuery;
-	}
-
-	/**
-	 * Sets the stories query.
-	 *
-	 * @param storiesQuery the new stories query
-	 */
-	public void setStoriesQuery(String storiesQuery) {
-		this.storiesQuery = Optional.ofNullable(storiesQuery).orElse("");
 	}
 }

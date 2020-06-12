@@ -260,9 +260,10 @@ public class Utils {
 	 */
 	public static String prepareUrl(String text) {
 		StringBuilder sb = new StringBuilder();
-		for (char c : text.toCharArray()) {
-			sb.append("%" + Integer.toHexString((byte) c));
-		}
+		if (text != null)
+			for (char c : text.toCharArray()) {
+				sb.append("%" + Integer.toHexString((byte) c));
+			}
 		return sb.toString();
 	}
 

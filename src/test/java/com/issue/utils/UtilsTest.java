@@ -9,10 +9,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.issue.configuration.GlobalParams;
+import com.issue.configuration.ProjectPhase;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
 import com.issue.model.Feature;
@@ -138,5 +142,25 @@ class UtilsTest {
 	void testFullStatsRunWithNoConnectionException() {
 		// Start main routine
 		assertThrows(ConnectException.class, () -> Utils.runProgress("usr", "passwd"));
+	}
+
+	/**
+	 * Test providing global parameters.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	void testProvidingGlobalParameters() throws IOException {
+		// Provide global parameters
+		GlobalParams globalParams = Utils
+				.provideGlobalParams("src/test/resources/test_positive_application.properties");
+
+		// Extract one project phase object
+		List<ProjectPhase> phases = globalParams.getPhases().orElse(new ArrayList<>());
+		ProjectPhase projectPhase = (ProjectPhase) phases.stream().findFirst().get();
+
+		assertThat(projectPhase.getOutputFileName4Html()).isEqualTo("test.htm");
+		assertThat(projectPhase.getOutputFileName4Csv()).isEqualTo("test.csv");
+		assertThat(projectPhase.getStoriesQuery()).isEqualTo("");
 	}
 }

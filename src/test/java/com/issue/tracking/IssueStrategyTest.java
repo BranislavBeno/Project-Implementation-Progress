@@ -98,10 +98,10 @@ class IssueStrategyTest {
 		globalParams.setPassword("password");
 
 		// Get features json
-		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, 0, 1000);
+		String jsonString = IssueStrategy.FEATURES.askIssueTracker(globalParams, "", 0, 1000);
 		assertThat(jsonString).isNotNull();
 
-		IFeatureDao<String, Feature> featuresRepo = Features.createFeaturesRepo(globalParams);
+		IFeatureDao<String, Feature> featuresRepo = Features.createFeaturesRepo(globalParams, "");
 		assertThat(featuresRepo.size()).isEqualTo(0);
 	}
 
@@ -124,10 +124,10 @@ class IssueStrategyTest {
 		globalParams.setPassword("password");
 
 		// Get features json
-		String jsonString = IssueStrategy.STORIES.askIssueTracker(globalParams, 0, 1000);
+		String jsonString = IssueStrategy.STORIES.askIssueTracker(globalParams, "", 0, 1000);
 		assertThat(jsonString).isNotNull();
 
-		IStoryDao<Story> storiesRepo = Stories.createStoriesRepo(globalParams);
+		IStoryDao<Story> storiesRepo = Stories.createStoriesRepo(globalParams, "");
 		assertThat(storiesRepo.size()).isEqualTo(0);
 	}
 }

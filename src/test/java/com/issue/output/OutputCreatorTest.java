@@ -66,12 +66,7 @@ class OutputCreatorTest {
 	 */
 	@Test
 	void testNegativeHtmlOutputFileExists() throws IOException, InterruptedException {
-		// Provide global parameters
-		GlobalParams globalParams = Utils
-				.provideGlobalParams("src/test/resources/test_negative1_application.properties");
-
-		assertThrows(IllegalArgumentException.class,
-				() -> OutputCreators.createHtmlOutput(extractFeatures(), globalParams));
+		assertThrows(IllegalArgumentException.class, () -> OutputCreators.createHtmlOutput(extractFeatures(), null));
 	}
 
 	/**
@@ -82,14 +77,10 @@ class OutputCreatorTest {
 	 */
 	@Test
 	void testPositiveHtmlOutputFileExists() throws IOException, InterruptedException {
-		// Provide global parameters
-		GlobalParams globalParams = Utils
-				.provideGlobalParams("src/test/resources/test_positive_application.properties");
-
 		// Create HTML output
-		OutputCreators.createHtmlOutput(extractFeatures(), globalParams);
+		OutputCreators.createHtmlOutput(extractFeatures(), "test.htm");
 
-		assertThat(Files.exists(Paths.get(globalParams.getOutputFileName4Html()))).isTrue();
+		assertThat(Files.exists(Paths.get("test.htm"))).isTrue();
 	}
 
 	/**
@@ -100,12 +91,7 @@ class OutputCreatorTest {
 	 */
 	@Test
 	void testNegativeCsvOutputFileExists() throws IOException, InterruptedException {
-		// Provide global parameters
-		GlobalParams globalParams = Utils
-				.provideGlobalParams("src/test/resources/test_negative1_application.properties");
-
-		assertThrows(IllegalArgumentException.class,
-				() -> OutputCreators.createCsvOutput(extractFeatures(), globalParams));
+		assertThrows(IllegalArgumentException.class, () -> OutputCreators.createCsvOutput(extractFeatures(), null));
 	}
 
 	/**
@@ -116,20 +102,16 @@ class OutputCreatorTest {
 	 */
 	@Test
 	void testPositiveCsvOutputFileExists() throws IOException, InterruptedException {
-		// Provide global parameters
-		GlobalParams globalParams = Utils
-				.provideGlobalParams("src/test/resources/test_positive_application.properties");
-
 		// Create CSV output
-		OutputCreators.createCsvOutput(extractFeatures(), globalParams);
+		OutputCreators.createCsvOutput(extractFeatures(), "test.csv");
 
-		assertThat(Files.exists(Paths.get(globalParams.getOutputFileName4Csv()))).isTrue();
+		assertThat(Files.exists(Paths.get("test.csv"))).isTrue();
 	}
 
 	/**
 	 * Test negative xlsx output file exists.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException          Signals that an I/O exception has occurred.
 	 * @throws InterruptedException the interrupted exception
 	 */
 	@Test
