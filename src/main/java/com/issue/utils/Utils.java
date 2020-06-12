@@ -329,14 +329,17 @@ public class Utils {
 
 			// Iterate over all phases
 			for (ProjectPhase phase : phases) {
+				// Set phase counter for logging
+				int phaseCounter = phases.indexOf(phase) + 1;
+
 				// Create features repository for particular phase
 				IFeatureDao<String, Feature> features = Features.createFeaturesRepo(globalParams,
 						phase.getFeaturesQuery());
-				logger.info("{} features processed.", features.size());
+				logger.info("{} features processed for phase {}.", features.size(), phaseCounter);
 
 				// Create stories repository for particular phase
 				IStoryDao<Story> stories = Stories.createStoriesRepo(globalParams, phase.getStoriesQuery());
-				logger.info("{} stories processed.", stories.size());
+				logger.info("{} stories processed for phase {}.", stories.size(), phaseCounter);
 
 				// Import stories data into features map for particular phase
 				Stories.importStories(features, stories);

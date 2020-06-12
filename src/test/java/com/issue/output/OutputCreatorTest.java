@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -36,12 +38,16 @@ class OutputCreatorTest {
 	 * @return the dao
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	private IFeatureDao<String, Feature> extractFeatures() throws IOException {
+	private List<IFeatureDao<String, Feature>> extractFeatures() throws IOException {
+		// Initialize new repository list
+		List<IFeatureDao<String, Feature>> list = new ArrayList<>();
 		// Get Json string
 		String jsonString = Utils.readFileContent("src/test/resources/features.json");
-		// extract features from json
+		// Extract features from json
 		IFeatureDao<String, Feature> features = Features.parseFeatures(jsonString);
-		return features;
+		// Add features repository into repository list
+		list.add(features);
+		return list;
 	}
 
 	/**
@@ -66,7 +72,8 @@ class OutputCreatorTest {
 	 */
 	@Test
 	void testNegativeHtmlOutputFileExists() throws IOException, InterruptedException {
-		assertThrows(IllegalArgumentException.class, () -> OutputCreators.createHtmlOutput(extractFeatures(), null));
+		assertThrows(IllegalArgumentException.class,
+				() -> OutputCreators.createHtmlOutput(extractFeatures().stream().findFirst().orElseThrow(), null));
 	}
 
 	/**
@@ -78,7 +85,7 @@ class OutputCreatorTest {
 	@Test
 	void testPositiveHtmlOutputFileExists() throws IOException, InterruptedException {
 		// Create HTML output
-		OutputCreators.createHtmlOutput(extractFeatures(), "test.htm");
+		OutputCreators.createHtmlOutput(extractFeatures().stream().findFirst().orElseThrow(), "test.htm");
 
 		assertThat(Files.exists(Paths.get("test.htm"))).isTrue();
 	}
@@ -91,7 +98,8 @@ class OutputCreatorTest {
 	 */
 	@Test
 	void testNegativeCsvOutputFileExists() throws IOException, InterruptedException {
-		assertThrows(IllegalArgumentException.class, () -> OutputCreators.createCsvOutput(extractFeatures(), null));
+		assertThrows(IllegalArgumentException.class,
+				() -> OutputCreators.createCsvOutput(extractFeatures().stream().findFirst().orElseThrow(), null));
 	}
 
 	/**
@@ -103,7 +111,7 @@ class OutputCreatorTest {
 	@Test
 	void testPositiveCsvOutputFileExists() throws IOException, InterruptedException {
 		// Create CSV output
-		OutputCreators.createCsvOutput(extractFeatures(), "test.csv");
+		OutputCreators.createCsvOutput(extractFeatures().stream().findFirst().orElseThrow(), "test.csv");
 
 		assertThat(Files.exists(Paths.get("test.csv"))).isTrue();
 	}
@@ -136,16 +144,20 @@ class OutputCreatorTest {
 		GlobalParams globalParams = Utils
 				.provideGlobalParams("src/test/resources/test_positive_application.properties");
 
+		// Get list of phase related features
+		List<IFeatureDao<String, Feature>> list = extractFeatures();
+
 		// Extract features from json
-		IFeatureDao<String, Feature> features = extractFeatures();
+		IFeatureDao<String, Feature> features = list.stream().findFirst().orElseThrow();
 
 		// Extract stories from json
 		IStoryDao<Story> stories = extractStories();
 
 		// Import stories data into features map
 		Stories.importStories(features, stories);
+
 		// Create XLSX output
-		Dao2Output xlsxOutput = OutputCreators.createXlsxOutput(features, globalParams);
+		Dao2Output xlsxOutput = OutputCreators.createXlsxOutput(list, globalParams);
 
 		assertThat(Files.exists(Paths.get(xlsxOutput.provideOutputFileName()))).isTrue();
 

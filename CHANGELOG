@@ -1,3 +1,9 @@
+Changes against version 1.3.0
+-----------------------------
+- Features production re-implemented.
+  Now are automatically produced features for all project phases,
+  which are listed in application.properties file.
+
 Changes against version 1.2.0
 -----------------------------
 - Added new stories statuses 'Verified', 'Validated', 'Discarded'

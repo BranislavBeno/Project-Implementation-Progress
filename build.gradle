@@ -54,9 +54,9 @@ dependencies {
 }
 
 def versionMajor = 1
-def versionMinor = 3
+def versionMinor = 4
 def versionPatch = 0
-def versionBuild = 4
+def versionBuild = 5
 version = "R${versionMajor}.${versionMinor}.${versionPatch}"
 
 jar{

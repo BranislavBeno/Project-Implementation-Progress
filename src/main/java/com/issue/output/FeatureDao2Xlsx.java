@@ -245,10 +245,11 @@ public class FeatureDao2Xlsx implements Dao2Output {
 	 * Creates the last line.
 	 *
 	 * @param workbook the workbook
+	 * @param sheetIdx the sheet idx
 	 * @param rowIdx   the row idx
 	 */
-	private void createLastLine(Workbook workbook, int rowIdx) {
-		Row content = workbook.getSheetAt(0).createRow(rowIdx);
+	private void createLastLine(Workbook workbook, int sheetIdx, int rowIdx) {
+		Row content = workbook.getSheetAt(sheetIdx).createRow(rowIdx);
 		IntStream.range(0, 10).forEach(i -> {
 			Cell cell = content.createCell(i);
 			cell.setCellStyle(lastRowStyle(workbook));
@@ -259,8 +260,10 @@ public class FeatureDao2Xlsx implements Dao2Output {
 	 * Generate features 4 xlsx.
 	 *
 	 * @param workbook the workbook
+	 * @param sheetIdx the sheet idx
+	 * @param features the features
 	 */
-	private void generateFeatures4Xlsx(Workbook workbook, IFeatureDao<String, Feature> features) {
+	private void generateFeatures4Xlsx(Workbook workbook, int sheetIdx, IFeatureDao<String, Feature> features) {
 		// prepare list of features
 		List<Feature> values = Features.prepareFeaturesList(features);
 
@@ -278,7 +281,7 @@ public class FeatureDao2Xlsx implements Dao2Output {
 			int colIdx = 0;
 
 			// Create new row
-			Row content = workbook.getSheetAt(0).createRow(rowIdx++);
+			Row content = workbook.getSheetAt(sheetIdx).createRow(rowIdx++);
 
 			// Column 1 - Team
 			content2Cell(workbook, content.createCell(colIdx), feature.getTeam(), isRowLine);
@@ -328,7 +331,7 @@ public class FeatureDao2Xlsx implements Dao2Output {
 		}
 
 		// Create last empty row with top line
-		createLastLine(workbook, rowIdx);
+		createLastLine(workbook, sheetIdx, rowIdx);
 	}
 
 	/**
@@ -412,10 +415,11 @@ public class FeatureDao2Xlsx implements Dao2Output {
 			CellStyle headerStyle = headerStyle(workbook);
 
 			// Run over all gathered phases
-			int counter = 0;
+			int counter = 1;
+			int sheetIdx = 0;
 			for (IFeatureDao<String, Feature> features : dao) {
 				// Create sheet
-				Sheet sheet = workbook.createSheet("Features" + ++counter);
+				Sheet sheet = workbook.createSheet("Phase " + counter++);
 
 				// Create header row
 				Row header = sheet.createRow(0);
@@ -424,7 +428,7 @@ public class FeatureDao2Xlsx implements Dao2Output {
 				headerRow(columnNames, headerStyle, header);
 
 				// Put content into table
-				generateFeatures4Xlsx(workbook, features);
+				generateFeatures4Xlsx(workbook, sheetIdx++, features);
 
 				// Auto size columns
 				IntStream.range(0, columnNames.size()).forEach(sheet::autoSizeColumn);
