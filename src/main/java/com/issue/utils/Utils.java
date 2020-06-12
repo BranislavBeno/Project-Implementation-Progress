@@ -321,6 +321,9 @@ public class Utils {
 		globalParams.setPassword(passwd);
 
 		try {
+			// Create empty list of feature repositories
+			List<IFeatureDao<String, Feature>> featuresList = new ArrayList<>();
+
 			// Get list of phases
 			List<ProjectPhase> phases = globalParams.getPhases().orElseThrow();
 
@@ -338,6 +341,9 @@ public class Utils {
 				// Import stories data into features map for particular phase
 				Stories.importStories(features, stories);
 
+				// Add phase specific features repository into list of repositories
+				featuresList.add(features);
+
 				// Create HTML output for particular phase
 				handleHtmlOutput(phase, features);
 
@@ -345,16 +351,20 @@ public class Utils {
 				handleCsvOutput(phase, features);
 			}
 
-			/*
-			 * // Create XLSX output try { OutputCreators.createXlsxOutput(features,
-			 * globalParams); logger.info("File with XLSX content created successfully."); }
-			 * catch (IllegalArgumentException e) {
-			 * logger.warn("No file name for XLSX output in properties file defined."); }
-			 */
+			// Create XLSX output
+			try {
+				OutputCreators.createXlsxOutput(featuresList, globalParams);
+				logger.info("File with XLSX content created successfully.");
+			} catch (IllegalArgumentException e) {
+				logger.warn("No file name for XLSX output in properties file defined.");
+			}
+
 			// Processing finished successfully.
 			logger.info("Processing finished.");
 
-		} catch (NoSuchElementException e) {
+		} catch (
+
+		NoSuchElementException e) {
 			// Processing finished with exception.
 			logger.error(
 					"Processing failed due to no list of queries for data gathering. Check application.properties file.");

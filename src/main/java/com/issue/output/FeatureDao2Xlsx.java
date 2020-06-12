@@ -41,7 +41,7 @@ public class FeatureDao2Xlsx implements Dao2Output {
 	private static Logger logger = LogManager.getLogger(FeatureDao2Xlsx.class);
 
 	/** The dao. */
-	private IFeatureDao<String, Feature> dao;
+	private List<IFeatureDao<String, Feature>> dao;
 
 	/** The global params. */
 	private GlobalParams globalParams;
@@ -49,11 +49,11 @@ public class FeatureDao2Xlsx implements Dao2Output {
 	/**
 	 * Instantiates a new feature dao 2 csv.
 	 *
-	 * @param dao          the dao
+	 * @param daoList      the dao
 	 * @param globalParams the global params
 	 */
-	public FeatureDao2Xlsx(IFeatureDao<String, Feature> dao, GlobalParams globalParams) {
-		this.dao = dao;
+	public FeatureDao2Xlsx(List<IFeatureDao<String, Feature>> daoList, GlobalParams globalParams) {
+		this.dao = daoList;
 		this.globalParams = globalParams;
 	}
 
@@ -260,9 +260,9 @@ public class FeatureDao2Xlsx implements Dao2Output {
 	 *
 	 * @param workbook the workbook
 	 */
-	private void generateFeatures4Xlsx(Workbook workbook) {
+	private void generateFeatures4Xlsx(Workbook workbook, IFeatureDao<String, Feature> features) {
 		// prepare list of features
-		List<Feature> values = Features.prepareFeaturesList(dao);
+		List<Feature> values = Features.prepareFeaturesList(features);
 
 		// Add features
 		String teamName = "";
@@ -411,20 +411,24 @@ public class FeatureDao2Xlsx implements Dao2Output {
 			// Define header row style
 			CellStyle headerStyle = headerStyle(workbook);
 
-			// Create sheet
-			Sheet sheet = workbook.createSheet("Features");
+			// Run over all gathered phases
+			int counter = 0;
+			for (IFeatureDao<String, Feature> features : dao) {
+				// Create sheet
+				Sheet sheet = workbook.createSheet("Features" + ++counter);
 
-			// Create header row
-			Row header = sheet.createRow(0);
+				// Create header row
+				Row header = sheet.createRow(0);
 
-			// Fill header row
-			headerRow(columnNames, headerStyle, header);
+				// Fill header row
+				headerRow(columnNames, headerStyle, header);
 
-			// Put content into table
-			generateFeatures4Xlsx(workbook);
+				// Put content into table
+				generateFeatures4Xlsx(workbook, features);
 
-			// Autosize columns
-			IntStream.range(0, columnNames.size()).forEach(sheet::autoSizeColumn);
+				// Auto size columns
+				IntStream.range(0, columnNames.size()).forEach(sheet::autoSizeColumn);
+			}
 
 			xlsxContent(workbook);
 

@@ -4,6 +4,7 @@
 package com.issue.utils;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.issue.configuration.GlobalParams;
 import com.issue.contract.Dao2Output;
@@ -63,9 +64,9 @@ public class OutputCreators {
 	 * @param globalParams the global params
 	 * @return the dao 2 output
 	 */
-	public static Dao2Output createXlsxOutput(IFeatureDao<String, Feature> features, GlobalParams globalParams) {
+	public static Dao2Output createXlsxOutput(List<IFeatureDao<String, Feature>> featureList, GlobalParams globalParams) {
 		// print features to XLSX
-		Dao2Output xlsxOutput = new FeatureDao2Xlsx(features, globalParams);
+		Dao2Output xlsxOutput = new FeatureDao2Xlsx(featureList, globalParams);
 		xlsxOutput.provideContent();
 
 		return xlsxOutput;
