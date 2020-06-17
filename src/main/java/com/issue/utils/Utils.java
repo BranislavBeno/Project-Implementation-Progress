@@ -30,6 +30,7 @@ import com.issue.configuration.GlobalParams;
 import com.issue.configuration.ProjectPhase;
 import com.issue.contract.IFeatureDao;
 import com.issue.contract.IStoryDao;
+import com.issue.jdbc.Send2DB;
 import com.issue.model.Feature;
 import com.issue.model.Story;
 
@@ -121,6 +122,11 @@ public class Utils {
 
 		// Get properties
 		Properties props = provideProperties(propFile);
+
+		// Get content from database properties
+		globalParams.setDbUri(props.getProperty("dbUri", ""));
+		globalParams.setDbUsername(props.getProperty("dbUser", ""));
+		globalParams.setDbPassword(props.getProperty("dbPassword", ""));
 
 		// Get content from properties
 		globalParams.setIssueTrackerUri(props.getProperty("issueTrackerUri"));
@@ -302,17 +308,19 @@ public class Utils {
 	/**
 	 * Run progress.
 	 *
-	 * @param user   the user
-	 * @param passwd the passwd
+	 * @param user     the user
+	 * @param passwd   the passwd
+	 * @param write2DB the write 2 DB
 	 * @throws IOException          Signals that an I/O exception has occurred.
 	 * @throws InterruptedException the interrupted exception
 	 */
-	public static void runProgress(final String user, final String passwd) throws IOException, InterruptedException {
+	public static void runProgress(final String user, final String passwd, boolean write2DB)
+			throws IOException, InterruptedException {
 		// Start processing.
 		logger.info("Processing started.");
 
 		// Kick off progress thread. // Provide global parameters
-		GlobalParams globalParams = Utils.provideGlobalParams("application.properties");
+		GlobalParams globalParams = Utils.provideGlobalParams("conf_impl/application.properties");
 
 		// Set user name for issue tracker authentication
 		globalParams.setUsername(user);
@@ -352,6 +360,13 @@ public class Utils {
 
 				// Create CSV output for particular phase
 				handleCsvOutput(phase, features);
+			}
+
+			// Write into DB
+			if (write2DB) {
+				// Send gathered data to DB
+				Send2DB send2DB = new Send2DB(globalParams, featuresList);
+				send2DB.sendProgress2DB();
 			}
 
 			// Create XLSX output

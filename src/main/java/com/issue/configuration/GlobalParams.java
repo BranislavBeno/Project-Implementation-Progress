@@ -16,29 +16,38 @@ public class GlobalParams {
 	/** The instance. */
 	private static GlobalParams instance;
 
-	/** The issue tracker uri. */
+	/** The DB URI. */
+	private String dbUri;
+
+	/** The DB user name. */
+	private String dbUsername;
+
+	/** The DB password. */
+	private String dbPassword;
+
+	/** The issue tracker URI. */
 	private String issueTrackerUri;
 
-	/** The issue uri. */
+	/** The issue URI. */
 	private String issueUri;
 
-	/** The epic report uri. */
+	/** The epic report URI. */
 	private String epicReportUri;
 
-	/** The username. */
+	/** The user name. */
 	private String username;
 
 	/** The password. */
 	private String password;
 
-	/** The output file name 4 xlsx. */
+	/** The output file name for XLSX. */
 	private String outputFileName4Xlsx;
 
 	/** The phases. */
 	private List<ProjectPhase> phases;
 
 	/**
-	 * Instantiates a new global params.
+	 * Instantiates a new global parameters.
 	 */
 	public GlobalParams() {
 		// Basic constructor is empty
@@ -54,6 +63,60 @@ public class GlobalParams {
 			instance = new GlobalParams();
 		}
 		return instance;
+	}
+
+	/**
+	 * Gets the db uri.
+	 *
+	 * @return the dbUri
+	 */
+	public String getDbUri() {
+		return dbUri;
+	}
+
+	/**
+	 * Sets the db uri.
+	 *
+	 * @param dbUri the dbUri to set
+	 */
+	public void setDbUri(String dbUri) {
+		this.dbUri = dbUri;
+	}
+
+	/**
+	 * Gets the db username.
+	 *
+	 * @return the dbUsername
+	 */
+	public String getDbUsername() {
+		return dbUsername;
+	}
+
+	/**
+	 * Sets the db username.
+	 *
+	 * @param dbUsername the dbUsername to set
+	 */
+	public void setDbUsername(String dbUsername) {
+		this.dbUsername = dbUsername;
+	}
+
+	/**
+	 * Gets the db password.
+	 *
+	 * @return the dbPassword
+	 */
+	public String getDbPassword() {
+		return dbPassword;
+	}
+
+	/**
+	 * Sets the db password.
+	 *
+	 * @param dbPassword the dbPassword to set
+	 */
+	public void setDbPassword(String dbPassword) {
+		this.dbPassword = dbPassword;
 	}
 
 	/**
