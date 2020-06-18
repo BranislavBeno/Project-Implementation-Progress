@@ -141,7 +141,7 @@ class UtilsTest {
 	@Test
 	void testFullStatsRunWithNoConnectionException() {
 		// Start main routine
-		assertThrows(ConnectException.class, () -> Utils.runProgress("usr", "passwd"));
+		assertThrows(ConnectException.class, () -> Utils.runProgress("usr", "passwd", false));
 	}
 
 	/**

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.issue.contract.IFeatureDao;
 import com.issue.model.Feature;
+import com.issue.utils.Features;
 
 /**
  * The Class Features4DB.
@@ -32,8 +34,8 @@ public class Features4DB {
 	/** The Constant DECIMAL_4_DEFAULT_0. */
 	private static final String DECIMAL_4_DEFAULT_0 = "DECIMAL(4) DEFAULT 0";
 
-	/** The Constant VARCHAR_64_DEFAULT_NULL. */
-	private static final String VARCHAR_64_DEFAULT_NULL = "VARCHAR(64) DEFAULT NULL";
+	/** The Constant VARCHAR_255_DEFAULT_NULL. */
+	private static final String VARCHAR_255_DEFAULT_NULL = "VARCHAR(255) DEFAULT NULL";
 
 	/** The Constant BOOLEAN_DEFAULT_FALSE. */
 	private static final String BOOLEAN_DEFAULT_FALSE = "BOOLEAN DEFAULT FALSE";
@@ -127,13 +129,27 @@ public class Features4DB {
 	 *
 	 * @return the string
 	 */
+	private String statement4TableDeletion() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("DROP TABLE IF EXISTS ").append(table).append(";");
+
+		return sb.toString();
+	}
+
+	/**
+	 * Statement 4 table creation.
+	 *
+	 * @return the string
+	 */
 	private String statement4TableCreation() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("DROP TABLE IF EXISTS ").append(table).append("; ").append("CREATE TABLE IF NOT EXISTS ")
-				.append(table).append(" ( ").append(column4Creation("id", "INT(11) NOT NULL AUTO_INCREMENT"))
-				.append(column4Creation(TEAM_NAME_COLUMN, VARCHAR_64_DEFAULT_NULL))
-				.append(column4Creation(ISSUE_ID_COLUMN, VARCHAR_64_DEFAULT_NULL))
-				.append(column4Creation(ISSUE_NAME_COLUMN, VARCHAR_64_DEFAULT_NULL))
+		sb
+				// .append("DROP TABLE IF EXISTS ").append(table).append("; ")
+				.append("CREATE TABLE IF NOT EXISTS ").append(table).append(" ( ")
+				.append(column4Creation("id", "INT(11) NOT NULL AUTO_INCREMENT"))
+				.append(column4Creation(TEAM_NAME_COLUMN, VARCHAR_255_DEFAULT_NULL))
+				.append(column4Creation(ISSUE_ID_COLUMN, VARCHAR_255_DEFAULT_NULL))
+				.append(column4Creation(ISSUE_NAME_COLUMN, VARCHAR_255_DEFAULT_NULL))
 				.append(column4Creation(ESTIMATED_SP_COLUMN, DECIMAL_4_DEFAULT_0))
 				.append(column4Creation(OPENED_SP_COLUMN, DECIMAL_4_DEFAULT_0))
 				.append(column4Creation(IN_PROGRESS_SP_COLUMN, DECIMAL_4_DEFAULT_0))
@@ -178,7 +194,7 @@ public class Features4DB {
 	/**
 	 * Params 4 insertion.
 	 *
-	 * @param stmt the stmt
+	 * @param stmt    the stmt
 	 * @param feature the feature
 	 * @throws SQLException the SQL exception
 	 */
@@ -199,24 +215,34 @@ public class Features4DB {
 	}
 
 	/**
-	 * Insert dao.
+	 * Insert DAO.
 	 *
 	 * @param features the features
 	 */
 	private void insertDao(final IFeatureDao<String, Feature> features) {
 		// Insert a new sprint data
-		logger.info("Inserting a new feature data into table '{}'.", table);
+		logger.info("Inserting a new features data into table '{}'.", table);
 
 		// Create statement for data insertion
 		String insertDataQuery = statement4Insertion();
 
 		try (PreparedStatement statement = connection.prepareStatement(insertDataQuery);) {
-			// Prepare statement for data insertion
-			params4Insertion(statement, features.getAll().values().stream().findFirst().orElseThrow());
+			// Get features
+			List<Feature> values = Features.prepareFeaturesList(features);
 
-			// Execute SQL query for data insertion
-			statement.executeBatch();
-			logger.info("New sprint data insertion successfull.");
+			// Run through all sorted features
+			values.forEach(f -> {
+				try {
+					// Prepare statement for data insertion
+					params4Insertion(statement, f);
+					// Execute SQL query for data insertion
+					statement.executeBatch();
+				} catch (SQLException e) {
+					logger.error("Inserting error at table {}", table);
+				}
+			});
+
+			logger.info("New features data insertion successfull.");
 
 			connection.commit();
 
@@ -234,17 +260,20 @@ public class Features4DB {
 	 * Creates the table.
 	 */
 	private void createTable() {
-		// Create table if doesn't exists
-		logger.info("Creating new table '{}' if doesn't exists.", table);
+		// Delete statement for old table deletion
+		String deleteTableQuery = statement4TableDeletion();
 
 		// Create statement for table creation
 		String createTableQuery = statement4TableCreation();
 
 		// Execute SQL query for table creation
 		try (Statement statement = connection.createStatement()) {
-			// Execute SQL query
+			// Execute SQL queries
+			statement.executeUpdate(deleteTableQuery);
+			logger.info("Old table '{}' deleted successfully.", table);
+
 			statement.executeUpdate(createTableQuery);
-			logger.info("Table '{}' exists or created successfully.", table);
+			logger.info("New table '{}' created successfully.", table);
 
 		} catch (SQLException e) {
 			logger.error("DB table {} creation failed!", table);
