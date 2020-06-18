@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.StringJoiner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -98,14 +101,36 @@ public class Features4DB {
 	}
 
 	/**
+	 * Statement 4 insertion.
+	 *
+	 * @return the string
+	 */
+	private String statement4Insertion() {
+		StringJoiner sj = new StringJoiner(", ", " (", ") ");
+		sj.add(TEAM_NAME_COLUMN);
+		sj.add(ISSUE_ID_COLUMN);
+		sj.add(ISSUE_NAME_COLUMN);
+		sj.add(ESTIMATED_SP_COLUMN);
+		sj.add(OPENED_SP_COLUMN);
+		sj.add(IN_PROGRESS_SP_COLUMN);
+		sj.add(CLOSED_SP_COLUMN);
+		sj.add(DONE_SP_COLUMN);
+		sj.add(FEATURE_SP_COLUMN);
+		sj.add(STORIES_DEFINED_COLUMN);
+		sj.add(UPDATED_COLUMN);
+
+		return "INSERT INTO " + table + sj.toString() + "VALUES " + "(?,?,?,?,?,?,?,?,?,?,?)";
+	}
+
+	/**
 	 * Statement 4 table creation.
 	 *
 	 * @return the string
 	 */
 	private String statement4TableCreation() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("CREATE TABLE IF NOT EXISTS ").append(table).append(" ( ")
-				.append(column4Creation("id", "INT(11) NOT NULL AUTO_INCREMENT"))
+		sb.append("DROP TABLE IF EXISTS ").append(table).append("; ").append("CREATE TABLE IF NOT EXISTS ")
+				.append(table).append(" ( ").append(column4Creation("id", "INT(11) NOT NULL AUTO_INCREMENT"))
 				.append(column4Creation(TEAM_NAME_COLUMN, VARCHAR_64_DEFAULT_NULL))
 				.append(column4Creation(ISSUE_ID_COLUMN, VARCHAR_64_DEFAULT_NULL))
 				.append(column4Creation(ISSUE_NAME_COLUMN, VARCHAR_64_DEFAULT_NULL))
@@ -123,6 +148,57 @@ public class Features4DB {
 	}
 
 	/**
+	 * Handle value.
+	 *
+	 * @param value the value
+	 * @return the int
+	 */
+	private int handleValue(final Integer value) {
+		if (value != null) {
+			return value;
+		}
+
+		return -1;
+	}
+
+	/**
+	 * Handle value.
+	 *
+	 * @param value the value
+	 * @return the double
+	 */
+	private double handleValue(final Double value) {
+		if (value != null) {
+			return value;
+		}
+
+		return -1;
+	}
+
+	/**
+	 * Params 4 insertion.
+	 *
+	 * @param stmt the stmt
+	 * @param feature the feature
+	 * @throws SQLException the SQL exception
+	 */
+	private void params4Insertion(PreparedStatement stmt, final Feature feature) throws SQLException {
+		// Set statement for database query
+		stmt.setString(1, feature.getTeam());
+		stmt.setString(2, feature.getKey());
+		stmt.setString(3, feature.getFeatureSummary());
+		stmt.setInt(4, handleValue(feature.getEstimated()));
+		stmt.setInt(5, handleValue(feature.getOpened()));
+		stmt.setInt(6, handleValue(feature.getInProgress()));
+		stmt.setInt(7, handleValue(feature.getClosed()));
+		stmt.setDouble(8, handleValue(feature.getRawDone()));
+		stmt.setInt(9, handleValue(feature.getStoryPoints()));
+		stmt.setBoolean(10, feature.isStoriesDefined());
+		stmt.setTimestamp(11, Timestamp.valueOf(LocalDateTime.now()));
+		stmt.addBatch();
+	}
+
+	/**
 	 * Insert dao.
 	 *
 	 * @param features the features
@@ -136,7 +212,7 @@ public class Features4DB {
 
 		try (PreparedStatement statement = connection.prepareStatement(insertDataQuery);) {
 			// Prepare statement for data insertion
-			params4Insertion(statement, features);
+			params4Insertion(statement, features.getAll().values().stream().findFirst().orElseThrow());
 
 			// Execute SQL query for data insertion
 			statement.executeBatch();
@@ -179,7 +255,7 @@ public class Features4DB {
 	 * Save.
 	 *
 	 * @param features the features
-	 * @param phaseId the phase id
+	 * @param phaseId  the phase id
 	 */
 	public void save(final IFeatureDao<String, Feature> features, int phaseId) {
 		// Set database table name
