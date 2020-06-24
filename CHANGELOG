@@ -1,3 +1,7 @@
+Changes against version 1.4.0
+-----------------------------
+- Added functionality for sending data to database.
+
 Changes against version 1.3.0
 -----------------------------
 - Features production re-implemented.
