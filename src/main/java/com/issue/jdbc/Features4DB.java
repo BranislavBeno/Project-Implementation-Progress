@@ -256,22 +256,31 @@ public class Features4DB {
 		}
 	}
 
+	private void deleteTable() {
+		// Delete statement for old table deletion
+		String deleteTableQuery = statement4TableDeletion();
+
+		// Execute SQL query for table creation
+		try (Statement statement = connection.createStatement()) {
+			// Execute SQL query
+			statement.executeUpdate(deleteTableQuery);
+			logger.info("Old table '{}' deleted successfully.", table);
+
+		} catch (SQLException e) {
+			logger.error("DB table {} deletion failed!", table);
+		}
+	}
+
 	/**
 	 * Creates the table.
 	 */
 	private void createTable() {
-		// Delete statement for old table deletion
-		String deleteTableQuery = statement4TableDeletion();
-
 		// Create statement for table creation
 		String createTableQuery = statement4TableCreation();
 
 		// Execute SQL query for table creation
 		try (Statement statement = connection.createStatement()) {
-			// Execute SQL queries
-			statement.executeUpdate(deleteTableQuery);
-			logger.info("Old table '{}' deleted successfully.", table);
-
+			// Execute SQL query
 			statement.executeUpdate(createTableQuery);
 			logger.info("New table '{}' created successfully.", table);
 
@@ -290,8 +299,13 @@ public class Features4DB {
 		// Set database table name
 		this.table = TABLE_PREFIX + phaseId;
 
-		// Create or rewrite data record
+		// Remove old data base table
+		deleteTable();
+
+		// Create new data base table
 		createTable();
+
+		// Insert new data records
 		insertDao(features);
 	}
 }

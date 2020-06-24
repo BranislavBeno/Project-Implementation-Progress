@@ -74,6 +74,7 @@ class Send2DBTest {
 	}
 
 	@Test
+	@DisplayName("Test whether object is created and non null data are sent to database")
 	void testDataAreSentToDB() throws SQLException, IOException {
 		// Prepare parameters for database connection
 		GlobalParams globalParams = Utils
